@@ -123,7 +123,6 @@
     <ClInclude Include="AssistFunc.h" />
     <ClInclude Include="IPrintable.h" />
     <ClInclude Include="IReadable.h" />
-    <ClInclude Include="usedLibs.h" />
     <ClInclude Include="User.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

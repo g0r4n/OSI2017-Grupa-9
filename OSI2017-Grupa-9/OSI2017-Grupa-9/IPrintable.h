@@ -1,5 +1,5 @@
 #pragma once
-#include "usedLibs.h"
+#include "AssistFunc.h"
 
 class IPrintable
 {

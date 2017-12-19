@@ -150,7 +150,7 @@ void admin::Administrator::changeCurrency(std::fstream& fileWithCurrencies) cons
 	{
 		string currency;
 		showAvailableCurrencies(fileWithCurrencies);
-		cout << "Izaberite valutu: "; std::getline(cin, currency);
+		cout << "Izaberite valutu: "; getline(cin, currency);
 	}
 }
 

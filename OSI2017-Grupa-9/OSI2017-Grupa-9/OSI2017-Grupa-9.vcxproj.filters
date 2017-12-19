@@ -47,9 +47,6 @@
     <ClInclude Include="IReadable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="usedLibs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="User.h">
       <Filter>Header Files</Filter>
     </ClInclude>

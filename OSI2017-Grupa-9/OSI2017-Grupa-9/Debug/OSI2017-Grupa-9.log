@@ -1,8 +1,13 @@
-﻿  User.cpp
-  IReadable.cpp
-  IPrintable.cpp
+﻿  Source.cpp
   AssistFunc.cpp
+  Generating Code...
+  Compiling...
   Administrator.cpp
 c:\users\goran\documents\github\s.i.s.a.r\osi2017-grupa-9\osi2017-grupa-9\administrator.cpp(135): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Compiling...
+  User.cpp
+  IReadable.cpp
+  IPrintable.cpp
   Generating Code...
   OSI2017-Grupa-9.vcxproj -> C:\Users\goran\Documents\GitHub\s.i.s.a.r\OSI2017-Grupa-9\Debug\OSI2017-Grupa-9.exe
