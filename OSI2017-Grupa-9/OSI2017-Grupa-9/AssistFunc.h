@@ -20,6 +20,6 @@ using std::cin;
 using std::endl;
 using std::getline;
 
-void writeInvalidLogin(string n, string ln, string p);
-int logInCheck(std::fstream& file, string n, string ln, string p);
-std::tuple<string, string, string, bool> logIn();
+void writeInvalidLogin(string, string);
+std::tuple<string, string, string, string, bool> logInCheck(std::fstream& file, string n, string p);
+std::tuple<string, string, string, string, bool> logIn();
