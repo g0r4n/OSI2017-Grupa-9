@@ -8,10 +8,10 @@ namespace user
 	class User: virtual public IPrintable, virtual public IReadable
 	{
 	protected:
-		std::tuple<string, string, string, bool> userInfo;			//ime, prezime, PIN, korisnicka grupa(0-ADMIN, 1-ANALITICAR)
+		std::tuple<string,string, string, string, bool> userInfo;			//ime, prezime, PIN, korisnicka grupa(0-ADMIN, 1-ANALITICAR)
 	public:
 		User();
-		User(const std::tuple<string, string, string, bool>&);
+		User(const std::tuple<string,string, string, string, bool>&);
 		/*	copy i move konstruktori zajedno sa operatorima dodjele
 			su nepotrebni zato sto je jedino polje tipa std::tuple<>
 			koji ima definisane svoje operatore dodjele i copy i move konstruktore	*/

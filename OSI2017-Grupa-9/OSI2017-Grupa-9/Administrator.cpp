@@ -5,13 +5,14 @@ using namespace user;
 
 User admin::Administrator::createNewUser() const
 {
-	string name, surename, PIN; bool userGroup;
+	string username,name, surename, PIN; bool userGroup;
+	cout << "Korisnicko ime(username): "; getline(cin, username);
 	cout << "Ime: "; getline(cin, name);
 	cout << "Prezime: "; getline(cin, surename);
 	PIN = getPIN();
 	cout << "Korisnica grupa(0,1): "; cin >> userGroup;			//exception ako korisnik unese pogresno
 	cin.ignore();												//ignorise '\n' || endl kada se unese izbor za korisnicku grupu(cin problem)
-	return User({name,surename,PIN,userGroup});
+	return User({username,name,surename,PIN,userGroup});
 }
 
 int admin::Administrator::getNumberOfUsers(std::fstream& fileWithUsers) const
@@ -67,11 +68,11 @@ void admin::Administrator::userOverview(std::fstream& fileWithUsers) const
 	if (fileWithUsers.is_open())										//excpetion!!!
 	{
 		//fileWithUsers(fileWithUsers.path(), std::ios::in);	ako fajl nije otvoren, otvoriti ga... ustanoviti gdje ce se fajl nalaziti i upisati ga umjesto kvazifunkcije path
-		string name, surename, PIN;
+		string username, name, surename, PIN;
 		bool userGroup;
 		cout << "Lista svih korisnika: " << endl;
-		while (fileWithUsers >> name >> surename >> PIN >> userGroup)
-			cout << name << " " << surename << " " << PIN << " " << userGroup << endl;
+		while (fileWithUsers >> username >> name >> surename >> PIN >> userGroup)
+			cout << username << name << " " << surename << " " << PIN << " " << userGroup << endl;
 	}
 }
 
@@ -112,7 +113,7 @@ void admin::Administrator::addNewUser(std::fstream& fileWithUsers) const
 			fileWithUsers.close();
 			arr.push_back(u);
 			std::sort(arr.begin(), arr.end(), [](User a, User b) {		return a < b;	});
-			fileWithUsers.open("C:\\Users\\goran\\Desktop\\test.txt", std::ios::out | std::ios::trunc);	//brise sve iz datoteke i onda upisuje sortirane u tu istu
+			fileWithUsers.open(UserDataFile, std::ios::out | std::ios::trunc);	//brise sve iz datoteke i onda upisuje sortirane u tu istu
 			for (User& u : arr)
 				fileWithUsers << u << endl;		
 	}
@@ -133,12 +134,12 @@ void admin::Administrator::deleteUser(std::fstream& fileWithUsers) const
 		std::sort(arr.begin(), arr.end(), [](User a, User b) {		return a < b;	});
 		int position = -1;
 		for (int i = 0; i < arr.size() && position == -1; i++)			//EXCEPTION
-			if (arr[i] == User({ name,surename,"",false }))
+			if (arr[i] == User({ "",name,surename,"",false }))
 				position = i;
 		arr.erase(arr.begin() + position);
 
 
-		fileWithUsers.open("C:\\Users\\goran\\Desktop\\test.txt", std::ios::out | std::ios::trunc);	//brise sve iz datoteke i onda upisuje sortirane u tu istu
+		fileWithUsers.open(UserDataFile, std::ios::out | std::ios::trunc);	//brise sve iz datoteke i onda upisuje sortirane u tu istu
 		for (User& u : arr)
 			fileWithUsers << u << endl;
 	}
