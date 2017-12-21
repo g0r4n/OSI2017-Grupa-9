@@ -1,13 +1,10 @@
-﻿  Source.cpp
-  AssistFunc.cpp
-  Generating Code...
-  Compiling...
-  Administrator.cpp
-c:\users\goran\documents\github\s.i.s.a.r\osi2017-grupa-9\osi2017-grupa-9\administrator.cpp(135): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-  Compiling...
-  User.cpp
+﻿  User.cpp
+  Source.cpp
   IReadable.cpp
   IPrintable.cpp
+  AssistFunc.cpp
+  Administrator.cpp
+c:\users\goran\documents\github\s.i.s.a.r\osi2017-grupa-9\osi2017-grupa-9\administrator.cpp(136): warning C4018: '<': signed/unsigned mismatch
   Generating Code...
+  LINK : C:\Users\goran\Documents\GitHub\s.i.s.a.r\OSI2017-Grupa-9\Debug\OSI2017-Grupa-9.exe not found or not built by the last incremental link; performing full link
   OSI2017-Grupa-9.vcxproj -> C:\Users\goran\Documents\GitHub\s.i.s.a.r\OSI2017-Grupa-9\Debug\OSI2017-Grupa-9.exe
