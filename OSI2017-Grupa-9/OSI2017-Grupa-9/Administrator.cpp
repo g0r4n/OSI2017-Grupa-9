@@ -101,6 +101,8 @@ void admin::Administrator::userOverview(std::fstream& fileWithUsers) const
 {
 	if (fileWithUsers.is_open())										//excpetion!!!
 	{
+		if(stati_cast<int>(fileWithUsers.tellg()) != 0)
+			fileWithUser.seekg(0);
 		//fileWithUsers(fileWithUsers.path(), std::ios::in);	ako fajl nije otvoren, otvoriti ga... ustanoviti gdje ce se fajl nalaziti i upisati ga umjesto kvazifunkcije path
 		user::User u;
 		cout << "Lista svih korisnika: " << endl;
@@ -114,7 +116,6 @@ void admin::Administrator::addNewUser(std::fstream& fileWithUsers) const
 	if (fileWithUsers.is_open())			//exception			// provjera u kom "modu" je otvorena dat
 	{
 		fileWithUsers.seekg(0);				// pozicionira indikator unutar fajla na pocetak tog fajla*/
-		fileWithUsers.seekg(0);
 		User u = createNewUser();
 		/*User x;
 
