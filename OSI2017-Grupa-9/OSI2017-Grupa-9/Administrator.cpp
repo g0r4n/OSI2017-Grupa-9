@@ -59,7 +59,9 @@ bool admin::Administrator::isPINokay(const string& PIN) const
 	return true;
 }
 
-admin::Administrator::Administrator(){}
+admin::Administrator::Administrator(): user::User(){}
+
+admin::Administrator::Administrator(const std::tuple<string, string, string, string, bool>& userInfo): user::User(userInfo) {}
 
 admin::Administrator::~Administrator(){}
 

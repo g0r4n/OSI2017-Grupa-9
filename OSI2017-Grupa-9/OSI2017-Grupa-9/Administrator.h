@@ -21,6 +21,7 @@ namespace admin
 	public:
 
 		Administrator();
+		Administrator(const std::tuple<string, string, string, string, bool>&);
 		~Administrator();
 
 		void userOverview(std::fstream&) const;
