@@ -32,6 +32,7 @@ void admin::Administrator::showAvailableCurrencies(std::fstream& fileWithCurrenc
 {
 	if (fileWithCurrencies.is_open())		//exception
 	{
+		fileWithCurrencies.seekg(0);
 		cout << "Dostupne valute su: " << endl;
 		string line;
 		while (fileWithCurrencies >> line)
@@ -57,7 +58,7 @@ string admin::getPIN()
 		cout << "PIN: ";
 		getline(cin, PIN);
 		if (!isPINokay(PIN))
-			cout << "Pogresan unos! PIN sadrzi 4 broja." << endl;
+			cout << "Pogresan unos!" << endl;
 	} while (!isPINokay(PIN));
 	return PIN;
 }
@@ -112,7 +113,6 @@ void admin::Administrator::addNewUser(std::fstream& fileWithUsers) const
 {
 	if (fileWithUsers.is_open())			//exception			// provjera u kom "modu" je otvorena dat
 	{
-		/*bool h = true;
 		fileWithUsers.seekg(0);				// pozicionira indikator unutar fajla na pocetak tog fajla*/
 		fileWithUsers.seekg(0);
 		User u = createNewUser();
@@ -155,7 +155,7 @@ void admin::Administrator::deleteUser(std::fstream& fileWithUsers) const
 {
 	if (fileWithUsers.is_open())
 	{
-		//fileWithUsers.clear();
+		//fileWithUsers.clear();	?
 		fileWithUsers.seekg(0);			//rewind
 		string name, surename;
 		cout << "Unesite ime i prezime korisnika kojeg zelite ukloniti: "; cin >> name >> surename;
@@ -163,9 +163,9 @@ void admin::Administrator::deleteUser(std::fstream& fileWithUsers) const
 		for (User x; fileWithUsers >> x; arr.push_back(x));
 		fileWithUsers.close();
 
-		std::sort(arr.begin(), arr.end(), [](User a, User b) {		return a < b;	});
+		std::sort(arr.begin(), arr.end(), [](User a, User b) {return a < b;});
 		int position = -1;
-		for (int i = 0; i < arr.size() && position == -1; i++)			//EXCEPTION
+		for (int i = 0; i < arr.size() && position == -1; i++)			
 			if (arr[i] == User({ "",name,surename,"",false }))
 				position = i;
 		arr.erase(arr.begin() + position);
@@ -179,7 +179,7 @@ void admin::Administrator::deleteUser(std::fstream& fileWithUsers) const
 
 void admin::Administrator::changeCurrency(std::fstream& fileWithCurrencies) const
 {
-	if (fileWithCurrencies.is_open())			// dovrsiti sa tramom 
+	if (fileWithCurrencies.is_open())			// dovrsiti sa tramom 		gdje se cuvaju podaci o valutama?
 	{
 		string currency;
 		showAvailableCurrencies(fileWithCurrencies);
