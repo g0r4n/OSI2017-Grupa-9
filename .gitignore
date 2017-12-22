@@ -32,3 +32,5 @@
 *.app
 *.opendb
 *.opensdf
+*.suo
+/.vs/s.i.s.a.r/v15/.suo
