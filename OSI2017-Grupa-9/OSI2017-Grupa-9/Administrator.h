@@ -5,17 +5,19 @@
 
 namespace admin
 {
-	class Administrator : user::User
+	class Administrator : public user::User
 	{
 	private:
 
 		User createNewUser() const;
 		int getNumberOfUsers(std::fstream&) const;
 		void showAvailableCurrencies(std::fstream&) const;
-																				//protected:
 
-		string getPIN() const;
-		bool isPINokay(const string&) const;
+
+		friend bool isPINokay(const string&);
+		friend string getPIN();
+		friend bool isUserNameOkay(const string,std::fstream&);
+		friend string getUserName();
     //	int findUser(std::fstream&) const;				metoda koja vraca poziciju unutar fajla na kojoj se nalazi trazeni korisnik.. ova metoda trazi da se unesu informacije o korisniku
 	//  int findUser(std::tuple<...>&) const;			kao i metode za dodavanje, ovde su vec dostupne info o korisniku													
 	public:
@@ -33,7 +35,5 @@ namespace admin
     //  void deleteUser(const std::tuple<string, string, string, bool>&) const;
 		void changeCurrency(std::fstream&) const;		
 		bool isLogInSuccesfull() const;
-		//setijsoptihjosith
-
 	};
 }

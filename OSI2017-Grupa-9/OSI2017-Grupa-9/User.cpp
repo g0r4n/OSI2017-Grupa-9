@@ -2,6 +2,11 @@
 using namespace user;
 
 
+string user::User::getUserName() const
+{
+	return std::get<0>(userInfo);
+}
+
 User::User(){}
 
 user::User::User(const std::tuple<string,string, string, string, bool>& userInfo)
@@ -18,6 +23,9 @@ bool user::User::operator<(const User& other) const
 	else if (std::get<1>(userInfo) == std::get<1>(other.userInfo))
 		if (std::get<2>(userInfo) < std::get<2>(other.userInfo))
 			return true;
+		else if (std::get<2>(userInfo) == std::get<2>(other.userInfo))
+			if (std::get<0>(userInfo) < std::get<0>(other.userInfo))
+				return true;
 	return false;
 }
 

@@ -17,12 +17,15 @@ User admin::Administrator::createNewUser() const
 
 int admin::Administrator::getNumberOfUsers(std::fstream& fileWithUsers) const
 {
-	string line;
-	int numberOfLines = 0;
-	while (getline(fileWithUsers, line))
-		numberOfLines++;
-	fileWithUsers.seekg(0);
-	return numberOfLines;
+	if (fileWithUsers.is_open())		//exception
+	{
+		string line;
+		int numberOfLines = 0;
+		while (getline(fileWithUsers, line))
+			numberOfLines++;
+		fileWithUsers.seekg(0);
+		return numberOfLines;
+	}
 }
 
 void admin::Administrator::showAvailableCurrencies(std::fstream& fileWithCurrencies) const
@@ -36,7 +39,17 @@ void admin::Administrator::showAvailableCurrencies(std::fstream& fileWithCurrenc
 	}
 }
 
-string admin::Administrator::getPIN() const
+bool admin::isPINokay(const string& PIN)
+{
+	if (PIN.length() != 4)
+		return false;
+	for (char c : PIN)				// provjera da li su svi karakteri PIN-a brojevi
+		if (!(c >= '0' && c <= '9'))
+			return false;
+	return true;
+}
+
+string admin::getPIN()
 {
 	string PIN;
 	do
@@ -49,19 +62,37 @@ string admin::Administrator::getPIN() const
 	return PIN;
 }
 
-bool admin::Administrator::isPINokay(const string& PIN) const
+bool admin::isUserNameOkay(const string username,std::fstream& fileWithUsers)
 {
-	if (PIN.length() != 4)
-		return false;
-	for (char c : PIN)				// provjera da li su svi karakteri PIN-a brojevi
-		if (!(c >= '0' && c <= '9'))
-			return false;
+	if (fileWithUsers.is_open())
+	{
+		user::User u;
+		while (fileWithUsers >> u)
+			if (u.getUserName() == username)
+				return false;
+	}
 	return true;
 }
 
-admin::Administrator::Administrator(): user::User(){}
+string admin::getUserName()
+{
+	std::fstream fileWithUsers(UserDataFile, std::ios::in);
+	if (fileWithUsers.is_open())//exception
+	{
+		string username;
+		do
+		{
+			cout << "Unesite korisnicko ime korisnika: "; getline(cin, username);
+		} while (!isUserNameOkay(username, fileWithUsers));
+		return username;
+	}
+}
 
-admin::Administrator::Administrator(const std::tuple<string, string, string, string, bool>& userInfo): user::User(userInfo) {}
+
+
+admin::Administrator::Administrator(){}
+
+admin::Administrator::Administrator(const std::tuple<string, string, string, string, bool>& userInfo){}
 
 admin::Administrator::~Administrator(){}
 
@@ -70,11 +101,10 @@ void admin::Administrator::userOverview(std::fstream& fileWithUsers) const
 	if (fileWithUsers.is_open())										//excpetion!!!
 	{
 		//fileWithUsers(fileWithUsers.path(), std::ios::in);	ako fajl nije otvoren, otvoriti ga... ustanoviti gdje ce se fajl nalaziti i upisati ga umjesto kvazifunkcije path
-		string username, name, surename, PIN;
-		bool userGroup;
+		user::User u;
 		cout << "Lista svih korisnika: " << endl;
-		while (fileWithUsers >> username >> name >> surename >> PIN >> userGroup)
-			cout << username << name << " " << surename << " " << PIN << " " << userGroup << endl;
+		while (fileWithUsers >> u)
+			cout << u << endl;
 	}
 }
 

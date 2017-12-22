@@ -44,12 +44,12 @@ std::tuple<string, string, string, string, bool> logIn()
 	while (!quit)
 	{
 		cout << "Unesite korisnicko ime korisnika: ";
-		getline(std::cin, locUserName);
+		getline(std::cin, locUserName);		//napises locUserName = admin::getUserName();  ta funkcija ce odraditi i provjeru da li postoji vec korisnicko ime unutar UserDataFile
 
 		cout << "Unesite pristupnu sifru korisnika: ";
-		getline(std::cin, locPw);
+		getline(std::cin, locPw);	//napises locPw = admin::getPIN()
 
-		if (locPw.length() == 4 && (std::get<0>(type = logInCheck(file, locUserName, locPw)) != "-1"))
+		if (locPw.length() == 4 && (std::get<0>(type = logInCheck(file, locUserName, locPw)) != "-1"))	//isPINokay(locPw)
 		{
 			quit = 1;
 		}
