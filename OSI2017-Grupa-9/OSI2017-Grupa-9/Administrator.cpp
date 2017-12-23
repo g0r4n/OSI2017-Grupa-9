@@ -100,7 +100,6 @@ void admin::Administrator::userOverview(std::fstream& fileWithUsers) const
 {
 	if (fileWithUsers.is_open())										//excpetion!!!
 	{
-		//fileWithUsers(fileWithUsers.path(), std::ios::in);	ako fajl nije otvoren, otvoriti ga... ustanoviti gdje ce se fajl nalaziti i upisati ga umjesto kvazifunkcije path
 		user::User u;
 		cout << "Lista svih korisnika: " << endl;
 		while (fileWithUsers >> u)
