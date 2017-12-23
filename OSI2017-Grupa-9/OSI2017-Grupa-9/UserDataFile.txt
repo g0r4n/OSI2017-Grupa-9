@@ -1,7 +1,4 @@
-Filip Filic 1021 1
-Marko Maric 1489 0
-Milan Jovic 1032 1
-Milan MIlic 4879 0
-Mladen Knaz 4587 1
-Uzengija Mahic 1458 1
-Zondbi Z 4512 1
+test1 Ahab Jepir 0000 1
+test2 KORISNIK TEST 0000 0
+test3 Marko Tramosljika 2001 0
+dzoni Nikola Tramosljika 4466 1
