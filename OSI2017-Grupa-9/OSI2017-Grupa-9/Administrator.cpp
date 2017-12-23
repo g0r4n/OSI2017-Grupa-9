@@ -1,4 +1,5 @@
 #include "Administrator.h"
+#include <locale>
 using namespace admin;
 using namespace user;
 
@@ -185,6 +186,68 @@ void admin::Administrator::changeCurrency(std::fstream& fileWithCurrencies) cons
 		string currency;
 		showAvailableCurrencies(fileWithCurrencies);
 		cout << "Izaberite valutu: "; getline(cin, currency);
+	}
+}
+
+int admin::Administrator::menu() const
+{
+	bool quit = 0;
+	std::string choice;
+	while (!quit)
+	{
+		cout << endl << "1.Pregled svih korisnika" << endl << "2.Dodavanje novog korisnika" << endl << "3.Brisanje postojeceg korisnika" << endl << "4.Promjena valute" << endl << "5.Odjava korisnika" << endl << "6.Izlazak iz programa" << endl;
+		std::getline(cin, choice);
+		if (isdigit(choice[0]))
+		{
+			switch (std::stoi(choice))
+			{
+			case 1:
+			{
+				system("cls");
+				std::fstream file; file.open(UserDataFile);
+				this->userOverview(file);
+				file.close();
+				system("cls");
+			} break;
+			case 2:
+			{
+				system("cls");
+				std::fstream file; file.open(UserDataFile);
+				this->addNewUser(file);
+				file.close();
+				system("cls");
+			} break;
+			case 3:
+			{
+				system("cls");
+				std::fstream file; file.open(UserDataFile);
+				this->deleteUser(file);
+				file.close();
+				system("cls");
+			} break;
+			case 4:
+			{
+				system("cls");
+				std::fstream file; file.open(ConfigFile);
+				this->changeCurrency(file);
+				file.close();
+				system("cls");
+			} break;
+			case 5:
+			{   system("cls");
+			return 0;
+			}
+			case 6:
+				exit(0);
+			default:
+			{
+				system("cls");
+				quit = 0;
+			}
+
+			}
+		}
+		else system("cls");
 	}
 }
 

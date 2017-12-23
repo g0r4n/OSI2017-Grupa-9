@@ -35,5 +35,7 @@ namespace admin
     //  void deleteUser(const std::tuple<string, string, string, bool>&) const;
 		void changeCurrency(std::fstream&) const;		
 		bool isLogInSuccesfull() const;
+		int menu() const;
 	};
 }
+
