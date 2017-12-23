@@ -1,1 +1,4 @@
-Zorana Pilipovic 1234 0
+test1 Ahab Jepir 0000 1
+test2 KORISNIK TEST 0000 0
+test3 Marko Tramosljika 2001 0
+dzoni Nikola Tramosljika 4466 1

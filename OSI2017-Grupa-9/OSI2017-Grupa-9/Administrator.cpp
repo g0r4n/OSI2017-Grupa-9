@@ -1,4 +1,5 @@
 #include "Administrator.h"
+#include <locale>
 using namespace admin;
 using namespace user;
 
@@ -32,6 +33,7 @@ void admin::Administrator::showAvailableCurrencies(std::fstream& fileWithCurrenc
 {
 	if (fileWithCurrencies.is_open())		//exception
 	{
+		fileWithCurrencies.seekg(0);
 		cout << "Dostupne valute su: " << endl;
 		string line;
 		while (fileWithCurrencies >> line)
@@ -57,7 +59,7 @@ string admin::getPIN()
 		cout << "PIN: ";
 		getline(cin, PIN);
 		if (!isPINokay(PIN))
-			cout << "Pogresan unos! PIN sadrzi 4 broja." << endl;
+			cout << "Pogresan unos!" << endl;
 	} while (!isPINokay(PIN));
 	return PIN;
 }
@@ -100,6 +102,9 @@ void admin::Administrator::userOverview(std::fstream& fileWithUsers) const
 {
 	if (fileWithUsers.is_open())										//excpetion!!!
 	{
+		if(static_cast<int>(fileWithUsers.tellg()) != 0)
+			fileWithUsers.seekg(0);
+		//fileWithUsers(fileWithUsers.path(), std::ios::in);	ako fajl nije otvoren, otvoriti ga... ustanoviti gdje ce se fajl nalaziti i upisati ga umjesto kvazifunkcije path
 		user::User u;
 		cout << "Lista svih korisnika: " << endl;
 		while (fileWithUsers >> u)
@@ -111,9 +116,7 @@ void admin::Administrator::addNewUser(std::fstream& fileWithUsers) const
 {
 	if (fileWithUsers.is_open())			//exception			// provjera u kom "modu" je otvorena dat
 	{
-		/*bool h = true;
 		fileWithUsers.seekg(0);				// pozicionira indikator unutar fajla na pocetak tog fajla*/
-		fileWithUsers.seekg(0);
 		User u = createNewUser();
 		/*User x;
 
@@ -154,7 +157,7 @@ void admin::Administrator::deleteUser(std::fstream& fileWithUsers) const
 {
 	if (fileWithUsers.is_open())
 	{
-		//fileWithUsers.clear();
+		//fileWithUsers.clear();	?
 		fileWithUsers.seekg(0);			//rewind
 		string name, surename;
 		cout << "Unesite ime i prezime korisnika kojeg zelite ukloniti: "; cin >> name >> surename;
@@ -162,9 +165,9 @@ void admin::Administrator::deleteUser(std::fstream& fileWithUsers) const
 		for (User x; fileWithUsers >> x; arr.push_back(x));
 		fileWithUsers.close();
 
-		std::sort(arr.begin(), arr.end(), [](User a, User b) {		return a < b;	});
+		std::sort(arr.begin(), arr.end(), [](User a, User b) {return a < b;});
 		int position = -1;
-		for (int i = 0; i < arr.size() && position == -1; i++)			//EXCEPTION
+		for (int i = 0; i < arr.size() && position == -1; i++)			
 			if (arr[i] == User({ "",name,surename,"",false }))
 				position = i;
 		arr.erase(arr.begin() + position);
@@ -178,11 +181,73 @@ void admin::Administrator::deleteUser(std::fstream& fileWithUsers) const
 
 void admin::Administrator::changeCurrency(std::fstream& fileWithCurrencies) const
 {
-	if (fileWithCurrencies.is_open())			// dovrsiti sa tramom 
+	if (fileWithCurrencies.is_open())			// dovrsiti sa tramom 		gdje se cuvaju podaci o valutama?
 	{
 		string currency;
 		showAvailableCurrencies(fileWithCurrencies);
 		cout << "Izaberite valutu: "; getline(cin, currency);
+	}
+}
+
+int admin::Administrator::menu() const
+{
+	bool quit = 0;
+	std::string choice;
+	while (!quit)
+	{
+		cout << endl << "1.Pregled svih korisnika" << endl << "2.Dodavanje novog korisnika" << endl << "3.Brisanje postojeceg korisnika" << endl << "4.Promjena valute" << endl << "5.Odjava korisnika" << endl << "6.Izlazak iz programa" << endl;
+		std::getline(cin, choice);
+		if (isdigit(choice[0]))
+		{
+			switch (std::stoi(choice))
+			{
+			case 1:
+			{
+				system("cls");
+				std::fstream file; file.open(UserDataFile);
+				this->userOverview(file);
+				file.close();
+				system("cls");
+			} break;
+			case 2:
+			{
+				system("cls");
+				std::fstream file; file.open(UserDataFile);
+				this->addNewUser(file);
+				file.close();
+				system("cls");
+			} break;
+			case 3:
+			{
+				system("cls");
+				std::fstream file; file.open(UserDataFile);
+				this->deleteUser(file);
+				file.close();
+				system("cls");
+			} break;
+			case 4:
+			{
+				system("cls");
+				std::fstream file; file.open(ConfigFile);
+				this->changeCurrency(file);
+				file.close();
+				system("cls");
+			} break;
+			case 5:
+			{   system("cls");
+			return 0;
+			}
+			case 6:
+				exit(0);
+			default:
+			{
+				system("cls");
+				quit = 0;
+			}
+
+			}
+		}
+		else system("cls");
 	}
 }
 

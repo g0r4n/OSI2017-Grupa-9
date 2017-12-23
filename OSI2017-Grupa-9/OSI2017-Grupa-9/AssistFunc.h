@@ -13,6 +13,7 @@
 
 #define UserDataFile "UserDataFile.txt" //po sklapanju programa, direktorijume fajlova regulisati
 #define LogFile "InvalidLog.txt"
+#define ConfigFile "ConfigFile.txt"
 
 using std::string;
 using std::cout;
