@@ -27,7 +27,7 @@ std::tuple<string, string, string, string, bool> logInCheck(std::fstream& file, 
 		if (username == local_username && p == local_p)
 		{
 			system("cls");
-			cout << " Uspjesno logovanje!" << "\n Dobrodosli " << local_n;
+			cout << " Uspjesno logovanje!" << endl << " Dobrodosli "  << local_n << endl;
 			return { local_username,local_n,local_ln,local_p, std::stoi(type) };
 		}
 
@@ -37,14 +37,14 @@ std::tuple<string, string, string, string, bool> logInCheck(std::fstream& file, 
 
 std::tuple<string, string, string, string, bool> logIn()
 {
-	std::fstream file(UserDataFile);
+	std::fstream file("test.txt");
 	bool quit = false;
 	string locUserName, locPw;
 	std::tuple<string, string, string, string, bool> type;
 	while (!quit)
 	{
 		cout << "Unesite korisnicko ime korisnika: ";
-		getline(std::cin, locUserName);		//napises locUserName = admin::getUserName();  ta funkcija ce odraditi i provjeru da li postoji vec korisnicko ime unutar UserDataFile
+		getline(std::cin, locUserName);		//napises locUserName = admin::getUserName();  ta funkcija ce odraditi i provjeru da li postoji vec korisnicko ime unutar "test.txt"
 
 		cout << "Unesite pristupnu sifru korisnika: ";
 		getline(std::cin, locPw);	//napises locPw = admin::getPIN()

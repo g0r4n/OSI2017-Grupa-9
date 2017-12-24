@@ -36,7 +36,7 @@ bool user::User::operator>(const User& other) const
 
 bool user::User::operator==(const User &other) const
 {
-	if (std::get<1>(userInfo) == std::get<1>(other.userInfo) && std::get<2>(userInfo) == std::get<2>(other.userInfo)) return true;
+	if (std::get<0>(userInfo) == std::get<0>(other.userInfo)) return true;
 	return false;
 }
 
@@ -57,13 +57,18 @@ void user::User::print(std::ostream& stream) const
 		<< std::setw(5)
 		<< std::get<3>(userInfo) 
 		<< " " 
-		<<std::setw(3)
+		//<<std::setw(4)
 		<< std::get<4>(userInfo);
 }
 
 void user::User::read(std::istream& stream)
 {
-	stream >> std::get<0>(userInfo) >> std::get<1>(userInfo) >> std::get<2>(userInfo) >> std::get<3>(userInfo) >> std::get<4>(userInfo);
+	stream
+		>> std::get<0>(userInfo) 
+		>> std::get<1>(userInfo) 
+		>> std::get<2>(userInfo) 
+		>> std::get<3>(userInfo)
+		>> std::get<4>(userInfo);
 }
 
 
