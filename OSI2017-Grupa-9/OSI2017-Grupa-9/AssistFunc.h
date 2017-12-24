@@ -12,7 +12,7 @@
 #include <vector>
 #include <iomanip>
 
-#define UserDataFile "UserDataFile.txt" //po sklapanju programa, direktorijume fajlova regulisati
+#define UserDataFile "test.txt.txt" //po sklapanju programa, direktorijume fajlova regulisati
 #define LogFile "InvalidLog.txt"
 #define ConfigFile "ConfigFile.txt"
 

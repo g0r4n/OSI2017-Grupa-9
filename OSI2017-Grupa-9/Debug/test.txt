@@ -1,0 +1,5 @@
+g0r4n            Goran            Marinkovic       1101  1
+kia              Kristina         Maric            4474  0
+mark             Marko            Skoric           1141  0
+trama            Nikola           Tramosljika      5515  1
+stop             Stop             Stop             1141  204
