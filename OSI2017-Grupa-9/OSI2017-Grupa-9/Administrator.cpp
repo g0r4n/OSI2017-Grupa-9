@@ -288,7 +288,7 @@ int admin::Administrator::menu() const
 				system("cls");
 				std::fstream file; file.open("test.txt");
 				this->addNewUser(file);
-				file.close();				
+				file.close();
 				cout << "Pritisnite bilo sta da nastavite koristiti aplikaciju: "; getchar();
 				system("cls");
 			} break;
@@ -315,7 +315,7 @@ int admin::Administrator::menu() const
 			return 0;
 			}
 			case 6:
-				exit(0);
+				return 1;
 			default:
 			{
 				system("cls");
@@ -327,4 +327,36 @@ int admin::Administrator::menu() const
 		else system("cls");
 	}
 }
+		
+	int runIt()
+
+		{
+
+				bool quit = 0;
+				while (!quit)
+				{
+
+
+			        auto temp = logIn();
+					if (std::get<4>(temp) == 1)
+					{
+
+
+			           admin::Administrator current(temp);
+					   quit = current.menu();
+					}
+					else
+					{
+						cout << "Analiticar";
+					}
+					system("cls");
+				}
+				
+				return 0;
+
+
+		}
+
+
+
 
