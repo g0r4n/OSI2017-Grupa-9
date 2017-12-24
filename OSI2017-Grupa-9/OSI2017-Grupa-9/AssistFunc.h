@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 #include <iomanip>
+#include <exception>
 
 #define UserDataFile "test.txt.txt" //po sklapanju programa, direktorijume fajlova regulisati
 #define LogFile "InvalidLog.txt"
