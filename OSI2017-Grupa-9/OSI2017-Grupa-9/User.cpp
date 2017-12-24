@@ -42,7 +42,23 @@ bool user::User::operator==(const User &other) const
 
 void user::User::print(std::ostream& stream) const
 {
-	stream << std::get<0>(userInfo) << std::get<1>(userInfo) << " " << std::get<2>(userInfo) << " " << std::get<3>(userInfo) << " " << std::get<4>(userInfo);
+	stream << std::resetiosflags(std::ios::adjustfield);			// resetovanje 
+	stream << std::setiosflags(std::ios::left);					// poravnanje u lijevo
+	stream
+		<< std::setw(16)
+		<< std::get<0>(userInfo)
+		<< " "
+		<< std::setw(16)
+		<< std::get<1>(userInfo)
+		<< " "
+		<< std::setw(16)
+		<< std::get<2>(userInfo) 
+		<< " " 
+		<< std::setw(5)
+		<< std::get<3>(userInfo) 
+		<< " " 
+		<<std::setw(3)
+		<< std::get<4>(userInfo);
 }
 
 void user::User::read(std::istream& stream)

@@ -64,21 +64,21 @@ string admin::getPIN()
 	return PIN;
 }
 
-bool admin::isUserNameOkay(const string username,std::fstream& fileWithUsers)
+bool admin::isUserNameOkay(const string username, std::fstream& fileWithUsers)
 {
-	if (fileWithUsers.is_open())
-	{
-		user::User u;
-		while (fileWithUsers >> u)
-			if (u.getUserName() == username)
-				return false;
-	}
+	if (!fileWithUsers.is_open())
+		fileWithUsers.open("test.txt", std::ios::out | std::ios::in);
+	user::User u;
+	while (fileWithUsers >> u)
+		if (u.getUserName() == username)
+			return false;
+
 	return true;
 }
 
 string admin::getUserName()
 {
-	std::fstream fileWithUsers(UserDataFile, std::ios::in);
+	std::fstream fileWithUsers("test.txt", std::ios::in);
 	if (fileWithUsers.is_open())//exception
 	{
 		string username;
@@ -100,57 +100,34 @@ admin::Administrator::~Administrator(){}
 
 void admin::Administrator::userOverview(std::fstream& fileWithUsers) const
 {
-	if (fileWithUsers.is_open())										//excpetion!!!
-	{
-		if(static_cast<int>(fileWithUsers.tellg()) != 0)
-			fileWithUsers.seekg(0);
-		//fileWithUsers(fileWithUsers.path(), std::ios::in);	ako fajl nije otvoren, otvoriti ga... ustanoviti gdje ce se fajl nalaziti i upisati ga umjesto kvazifunkcije path
-		user::User u;
-		cout << "Lista svih korisnika: " << endl;
-		while (fileWithUsers >> u)
-			cout << u << endl;
-	}
+	if (!fileWithUsers.is_open())
+		fileWithUsers.open("test.txt", std::ios::out | std::ios::in);
+	if (static_cast<int>(fileWithUsers.tellg()) != 0)
+		fileWithUsers.seekg(0);
+	user::User u;
+	cout << "Lista svih korisnika: " << endl;
+	while (fileWithUsers >> u)
+		cout << u << endl;
+
 }
 
 void admin::Administrator::addNewUser(std::fstream& fileWithUsers) const
 {
-	if (fileWithUsers.is_open())			//exception			// provjera u kom "modu" je otvorena dat
-	{
-		fileWithUsers.seekg(0);				// pozicionira indikator unutar fajla na pocetak tog fajla*/
-		User u = createNewUser();
-		/*User x;
+	if (!fileWithUsers.is_open())
+		fileWithUsers.open("test.txt", std::ios::out | std::ios::in);
+	fileWithUsers.clear();
+	fileWithUsers.seekg(0);				// pozicionira indikator unutar fajla na pocetak tog fajla*/
+	User u = createNewUser();
+	std::vector<User> arr;
+	for (User pom; fileWithUsers >> pom; arr.push_back(pom));
+	arr.push_back(u);
+	std::sort(arr.begin(), arr.end(), [](User &a, User &b) {		return a < b;	});
+	fileWithUsers.close();
+	fileWithUsers.open("test.txt", std::ios::out | std::ios::trunc);	//brise sve iz datoteke i onda upisuje sortirane u tu istu
+	for (User &u : arr)
+		fileWithUsers << u << endl;
+	fileWithUsers.close();
 
-		for (int startPosition = fileWithUsers.tellg(), newPosition; fileWithUsers >> x && h; startPosition = fileWithUsers.tellg())
-		{
-			newPosition = fileWithUsers.tellg();
-			if (u < x)
-			{
-				fileWithUsers.seekg(startPosition, std::ios::beg);
-				fileWithUsers << endl;
-				fileWithUsers.seekg(startPosition, std::ios::beg);
-				fileWithUsers << u;
-				h = false;
-			}
-			else if (u > x)
-			{
-				fileWithUsers.seekg(newPosition, std::ios::beg);
-				fileWithUsers << endl;
-				fileWithUsers.seekg(newPosition, std::ios::beg);
-				fileWithUsers << u;
-				h = false;
-			}
-		}
-		*/
-
-			std::vector<User> arr;
-			for (User x; fileWithUsers >> x; arr.push_back(x));
-			fileWithUsers.close();
-			arr.push_back(u);
-			std::sort(arr.begin(), arr.end(), [](User a, User b) {		return a < b;	});
-			fileWithUsers.open(UserDataFile, std::ios::out | std::ios::trunc);	//brise sve iz datoteke i onda upisuje sortirane u tu istu
-			for (User& u : arr)
-				fileWithUsers << u << endl;		
-	}
 }
 
 void admin::Administrator::deleteUser(std::fstream& fileWithUsers) const
@@ -173,7 +150,7 @@ void admin::Administrator::deleteUser(std::fstream& fileWithUsers) const
 		arr.erase(arr.begin() + position);
 
 
-		fileWithUsers.open(UserDataFile, std::ios::out | std::ios::trunc);	//brise sve iz datoteke i onda upisuje sortirane u tu istu
+		fileWithUsers.open("test.txt", std::ios::out | std::ios::trunc);	//brise sve iz datoteke i onda upisuje sortirane u tu istu
 		for (User& u : arr)
 			fileWithUsers << u << endl;
 	}
@@ -204,7 +181,7 @@ int admin::Administrator::menu() const
 			case 1:
 			{
 				system("cls");
-				std::fstream file; file.open(UserDataFile);
+				std::fstream file; file.open("test.txt");
 				this->userOverview(file);
 				file.close();
 				system("cls");
@@ -212,7 +189,7 @@ int admin::Administrator::menu() const
 			case 2:
 			{
 				system("cls");
-				std::fstream file; file.open(UserDataFile);
+				std::fstream file; file.open("test.txt");
 				this->addNewUser(file);
 				file.close();
 				system("cls");
@@ -220,7 +197,7 @@ int admin::Administrator::menu() const
 			case 3:
 			{
 				system("cls");
-				std::fstream file; file.open(UserDataFile);
+				std::fstream file; file.open("test.txt");
 				this->deleteUser(file);
 				file.close();
 				system("cls");

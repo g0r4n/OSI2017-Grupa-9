@@ -10,6 +10,7 @@
 #include <functional>
 #include <string>
 #include <vector>
+#include <iomanip>
 
 #define UserDataFile "UserDataFile.txt" //po sklapanju programa, direktorijume fajlova regulisati
 #define LogFile "InvalidLog.txt"
