@@ -11,6 +11,13 @@
 #include <string>
 #include <vector>
 #include <iomanip>
+#include <string>
+#include <experimental\filesystem>
+#include <ctime>
+#include <exception>
+#include <locale>
+#include <cctype>
+
 
 #define UserDataFile "UserDataFile.txt" //po sklapanju programa, direktorijume fajlova regulisati
 #define LogFile "InvalidLog.txt"

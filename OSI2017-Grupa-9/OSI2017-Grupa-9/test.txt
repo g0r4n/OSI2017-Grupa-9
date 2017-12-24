@@ -1,3 +1,2 @@
 g0r4n            Goran            Marinkovic       1101  1  
-boroja           Ivan Vanja       Boroja           9785  0  
-trama            Nikola           Tramosljika      1011  1  
+tele             group            2                6221  204

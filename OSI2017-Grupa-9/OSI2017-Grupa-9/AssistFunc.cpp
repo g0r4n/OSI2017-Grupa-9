@@ -49,7 +49,7 @@ std::tuple<string, string, string, string, bool> logIn()
 		cout << "Unesite pristupnu sifru korisnika: ";
 		getline(std::cin, locPw);	//napises locPw = admin::getPIN()
 
-		if (locPw.length() == 4 && (std::get<0>(type = logInCheck(file, locUserName, locPw)) != "-1"))	//isPINokay(locPw)
+		if (locPw.length() == 4 && (std::get<0>(type = logInCheck(file, locUserName, locPw)) != "-1"))	//isPINokay(locPw) 
 		{
 			quit = 1;
 		}
