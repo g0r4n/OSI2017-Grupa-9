@@ -33,7 +33,7 @@ namespace admin
  		void changeCurrency(std::fstream&) const;		
 		bool isLogInSuccesfull() const;
 		int menu() const;
-		int runIt();
+		
 	};
 }
 

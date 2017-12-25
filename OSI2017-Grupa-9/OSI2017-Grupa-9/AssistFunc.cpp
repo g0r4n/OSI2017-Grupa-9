@@ -64,3 +64,29 @@ std::tuple<string, string, string, string, bool> logIn()
 	}
 	return type;
 }
+
+int runIt()
+
+{
+
+	bool quit = 0;
+	while (!quit)
+	{
+
+
+		auto temp = logIn();
+		if (std::get<4>(temp) == 1)
+		{
+
+
+			admin::Administrator current(temp);
+			quit = current.menu();
+		}
+		else
+		{
+			cout << "Analiticar";
+		}
+		system("cls");
+	}
+	return 0;
+}
