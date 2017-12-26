@@ -34,6 +34,10 @@ public:
 	Bill& operator=(const Bill&);
 	static void billClassification();
 	static void split(const std::string& s, char c, std::vector<std::string>& v);
+
+	Date getDate();
+	std::vector<Bill::Product> getProductKey();
+	std::string getCustomer();
 private:
 	std::string customer;
 	Date date;

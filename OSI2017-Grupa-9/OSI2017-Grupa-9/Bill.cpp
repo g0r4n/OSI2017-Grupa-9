@@ -179,6 +179,21 @@ void Bill::split(const std::string & s, char c, std::vector<std::string>& v)
 	}
 }
 
+Bill::Date Bill::getDate()
+{
+	return this->date;
+}
+
+std::vector<Bill::Product> Bill::getProductKey()
+{
+	return this->products;
+}
+
+std::string Bill::getCustomer()
+{
+	return this->customer;
+}
+
 
 void Bill::billClassification()
 {

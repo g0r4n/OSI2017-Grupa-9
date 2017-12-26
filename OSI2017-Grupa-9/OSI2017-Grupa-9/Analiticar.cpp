@@ -1,6 +1,7 @@
 #include "Analiticar.h"
 #include "Bill.h"
 #include <string.h>
+#include<iomanip>
 analiticar::Analiticar::Analiticar() {}
 
 analiticar::Analiticar::Analiticar(const std::tuple<string, string, string, string, bool>& userInfo) : user::User(userInfo) {}
@@ -52,7 +53,7 @@ void analiticar::Analiticar::billsDateOverview()
 		//if((std::stoi(d)>=31)||(std::stoi(d)<1)||(std::)			ubaciti test za validan datum
 		quit = 1;
 	}
-	system("cls");
+	cout << endl<<endl;
 	Bill::Date start(std::stoi(d), std::stoi(m), std::stoi(g)); quit = 0;
 	while (!quit)
 	{
@@ -65,14 +66,48 @@ void analiticar::Analiticar::billsDateOverview()
 	{
 		cout << "Uneseni datumi nisu ispravni"<<endl; return;
 	}
-	
+	system("cls");
 	std::fstream file; file.open("Racuni za ispis.txt");
 	if (!file.is_open())
 		return;
 	string current;
+	cout << "Datum" << std::setw(12) << "Kupac" << std::setw(19) << "Proizvod" << std::setw(16) << " Kolicina"<<endl;
 	while (std::getline(file, current)) //and trenutni racun(datum)<krajnjeg
 	{
-		auto t = returnBillFromReadString(current); ////////////////////////////////////TBC/////////////////////////////////////////////
+		auto t = returnBillFromReadString(current);	
+		////////////////////////////////////TBC/////////////////////////////////////////////
+		if (t.getDate() > start && t.getDate()<finish);
+		{
+			cout << std::resetiosflags(std::ios::adjustfield);			
+			cout << std::setiosflags(std::ios::left);	
+			cout
+				<< std::setw(13)
+				<< t.getDate()
+				<< " "
+				<< std::setw(15)
+				<< t.getCustomer()
+				<< " "
+				<< std::setw(15)
+				<< t.getProductKey().front().productKey
+				<< " "
+				<< std::setw(9)
+				<< t.getProductKey().front().soldQuantity
+				<< " "
+				<< std::setw(4)
+				<< t.getProductKey().front().sumForProduct;
+
+				
+
+
+
+
+
+		}
+
+		if (t.getDate() > finish)
+		{
+			getchar(); break;
+		}
 	}
 
 
