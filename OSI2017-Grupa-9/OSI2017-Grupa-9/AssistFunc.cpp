@@ -1,5 +1,6 @@
-#include"AssistFunc.h"
+#include "AssistFunc.h"
 #include "Administrator.h"
+#include "Analiticar.h"
 
 void writeInvalidLogin(string username, string p)
 {
@@ -44,12 +45,12 @@ std::tuple<string, string, string, string, bool> logIn()
 	while (!quit)
 	{
 		cout << "Unesite korisnicko ime korisnika: ";
-		getline(std::cin, locUserName);		//napises locUserName = admin::getUserName();  ta funkcija ce odraditi i provjeru da li postoji vec korisnicko ime unutar "test.txt"
+		getline(std::cin, locUserName);		
 
 		cout << "Unesite pristupnu sifru korisnika: ";
-		getline(std::cin, locPw);	//napises locPw = admin::getPIN()
+		getline(std::cin, locPw);	
 
-		if (locPw.length() == 4 && (std::get<0>(type = logInCheck(file, locUserName, locPw)) != "-1"))	//isPINokay(locPw) 
+		if (admin::isPINokay(locPw) && (std::get<0>(type = logInCheck(file, locUserName, locPw)) != "-1"))	
 		{
 			quit = 1;
 		}
@@ -84,9 +85,12 @@ int runIt()
 		}
 		else
 		{
-			cout << "Analiticar";
+			analiticar::Analiticar current(temp);
+			quit = current.menu();
 		}
 		system("cls");
 	}
 	return 0;
 }
+
+

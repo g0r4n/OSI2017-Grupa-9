@@ -27,3 +27,10 @@ dzoni 4466
 test1 test2
 dzoni 4466
  
+dzona test
+zona 
+dzon 
+ 
+dzona  4466
+dzoni 4466
+Char 1

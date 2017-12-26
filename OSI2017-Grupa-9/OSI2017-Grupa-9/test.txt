@@ -1,4 +1,5 @@
 dzona            Nikola           Tramosljika      4466  1
-pleb             plebic           plebasijum       7385  1
 Char             stringic         potasijum        1111  0
+test             t1               1                1245  1
+atest1           tes1             te               1245  0
 test1            test2            test3            0000  1

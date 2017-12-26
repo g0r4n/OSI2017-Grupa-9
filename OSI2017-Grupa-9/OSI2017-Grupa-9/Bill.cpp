@@ -1,3 +1,4 @@
+#pragma once
 #include "Bill.h"
 
 Bill::Bill(std::string customer, Date date, std::vector<Bill::Product> products) : date(date)
