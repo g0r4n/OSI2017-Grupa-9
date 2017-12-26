@@ -82,6 +82,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -112,14 +113,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Administrator.h" />
+    <ClInclude Include="Analiticar.h" />
     <ClInclude Include="AssistFunc.h" />
+    <ClInclude Include="Bill.h" />
     <ClInclude Include="IPrintable.h" />
     <ClInclude Include="IReadable.h" />
     <ClInclude Include="User.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Administrator.cpp" />
+    <ClCompile Include="Analiticar.cpp" />
     <ClCompile Include="AssistFunc.cpp" />
+    <ClCompile Include="Bill.cpp" />
     <ClCompile Include="IPrintable.cpp" />
     <ClCompile Include="IReadable.cpp" />
     <ClCompile Include="Source.cpp" />

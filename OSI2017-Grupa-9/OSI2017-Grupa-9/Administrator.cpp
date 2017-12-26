@@ -300,7 +300,7 @@ int admin::Administrator::menu() const
 				system("cls");
 				std::fstream file; file.open("test.txt");
 				this->addNewUser(file);
-				file.close();				
+				file.close();
 				cout << "Pritisnite bilo sta da nastavite koristiti aplikaciju: "; getchar();
 				system("cls");
 			} break;
@@ -327,7 +327,7 @@ int admin::Administrator::menu() const
 			return 0;
 			}
 			case 6:
-				exit(0);
+				return 1;
 			default:
 			{
 				system("cls");
@@ -339,4 +339,9 @@ int admin::Administrator::menu() const
 		else system("cls");
 	}
 }
+		
+	
+
+
+
 

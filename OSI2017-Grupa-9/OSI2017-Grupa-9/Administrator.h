@@ -27,13 +27,13 @@ namespace admin
 		Administrator();
 		Administrator(const std::tuple<string, string, string, string, bool>&);
 		~Administrator();
-
 		void userOverview(std::fstream&) const;
-		void addNewUser(std::fstream&) const;		
+		void addNewUser(std::fstream&) const;
 		void deleteUser(std::fstream&) const;
  		void changeCurrency(std::fstream&) const;		
 		bool isLogInSuccesfull() const;
 		int menu() const;
+		
 	};
 }
 

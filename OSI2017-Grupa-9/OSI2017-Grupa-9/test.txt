@@ -1,4 +1,5 @@
-str              Char             Stringic         4474  0
-drake            Drago            Dragic           4874  1
-g0r4n            Goran            Marinkovic       1101  1
-skora            Marko            Skoric           1111  1
+dzona            Nikola           Tramosljika      4466  1
+Char             stringic         potasijum        1111  0
+test             t1               1                1245  1
+atest1           tes1             te               1245  0
+test1            test2            test3            0000  1
