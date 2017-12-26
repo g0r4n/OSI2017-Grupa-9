@@ -89,12 +89,24 @@ string admin::Administrator::getUserName() const
 	return username;
 }
 
+
 bool admin::Administrator::isUserGroupOkay(const string userGroup) const
 {
-	int x = std::stoi(userGroup);
-	if (x == 0 || x == 1)
-		return true;
-	return false;
+	if (userGroup.length() > 1) return false;
+
+	/*try-catch blok ce se izvrsiti samo ako je dobijeni string ima samo jedan karakter*/
+
+	try
+	{
+		int x = std::stoi(userGroup);			
+		if (x == 0 || x == 1)
+			return true;
+		return false;
+	}
+	catch (std::invalid_argument& ex)	// u slucaju da se upise samo string(ili prazan string), stoi baca exception invalid_argument
+	{
+		return false;
+	}
 }
 
 bool admin::Administrator::getUserGroup() const
