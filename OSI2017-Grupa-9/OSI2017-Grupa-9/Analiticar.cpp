@@ -71,48 +71,25 @@ void analiticar::Analiticar::billsDateOverview()
 	if (!file.is_open())
 		return;
 	string current;
-	cout << "Datum" << std::setw(12) << "Kupac" << std::setw(19) << "Proizvod" << std::setw(16) << " Kolicina"<<endl;
-	while (std::getline(file, current)) //and trenutni racun(datum)<krajnjeg
-	{
-		auto t = returnBillFromReadString(current);	
-		////////////////////////////////////TBC/////////////////////////////////////////////
-		if (t.getDate() > start && t.getDate()<finish);
+	cout << "Datum" << std::setw(12) << "Kupac" << std::setw(19) << "Proizvod" << std::setw(16) << "Kolicina "<<std::setw(5)<<"Cijena"<<endl;
+	while (std::getline(file, current))
 		{
-			cout << std::resetiosflags(std::ios::adjustfield);			
-			cout << std::setiosflags(std::ios::left);	
-			cout
-				<< std::setw(13)
-				<< t.getDate()
-				<< " "
-				<< std::setw(15)
-				<< t.getCustomer()
-				<< " "
-				<< std::setw(15)
-				<< t.getProductKey().front().productKey
-				<< " "
-				<< std::setw(9)
-				<< t.getProductKey().front().soldQuantity
-				<< " "
-				<< std::setw(4)
-				<< t.getProductKey().front().sumForProduct;
-
-				
-
-
-
-
-
+			auto t = returnBillFromReadString(current);
+			std::vector<std::string> vec;
+			Bill::split(current, '#', vec);
+			Bill::Date date = vec[0];
+			if (date > start && date<finish)
+			{
+				std::cout <<vec[0] << " " <<  vec[1] << " "
+					<< std::setw(19) << vec[2] << " " << std::setw(9) << vec[3] << " " << std::setw(8) << vec[5] <<endl;
+			}
 		}
 
-		if (t.getDate() > finish)
-		{
-			getchar(); break;
-		}
 	}
 
 
 
-}
+
 
 int analiticar::Analiticar::menu()
 {

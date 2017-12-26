@@ -304,7 +304,7 @@ Bill::Date::~Date()
 
 bool Bill::Date::operator>(const Bill::Date &other)
 {
-	if (year > other.year)
+	if (year > other.year)	
 		return true;
 	if (month > other.month)
 		return true;
@@ -313,7 +313,7 @@ bool Bill::Date::operator>(const Bill::Date &other)
 
 bool Bill::Date::operator<(const Bill::Date& other)
 {
-	if (year < other.year)
+	if (year < other.year)  
 		return true;
 	if (month < other.month)
 		return true;
