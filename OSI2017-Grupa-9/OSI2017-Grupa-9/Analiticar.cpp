@@ -51,7 +51,7 @@ void analiticar::Analiticar::billsDateOverview()
 		std::getline(cin, temp);
 		if (temp.length() != 10)
 		{
-			cout << "Datum nije ispravan"; //ubaciti test za validan datum
+			cout << "Datum nije ispravan"<<endl; //ubaciti test za validan datum
 			quit = 0;
 		}
 		else
@@ -63,7 +63,7 @@ void analiticar::Analiticar::billsDateOverview()
 				
 				quit = 1;
 			}
-			else cout << "Datum nije ispravan";
+			else cout << "Datum nije ispravan"<<endl;
 		}
 		
 	}
@@ -78,7 +78,7 @@ void analiticar::Analiticar::billsDateOverview()
 		std::getline(cin, temp);
 		if (temp.length() != 10)
 		{
-			cout << "Datum nije ispravan";
+			cout << "Datum nije ispravan"<<endl;
 			quit = 0;
 		}
 		else
@@ -89,7 +89,7 @@ void analiticar::Analiticar::billsDateOverview()
 				
 				quit = 1;
 			}
-			else cout << "Datum nije ispravan";
+			else cout << "Datum nije ispravan"<<endl;
 		}
 
 
