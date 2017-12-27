@@ -11,8 +11,16 @@ User admin::Administrator::createNewUser() const
 	string userGroup_temp;
 
 	username = getUserName();		//odraditi provjeru za "space" i sankcionisati je
-	cout << "Ime: "; getline(cin, name);
-	cout << "Prezime: "; getline(cin, surename);
+
+	do
+	{
+		cout << "Ime: "; getline(cin, name);
+	} while (name.length() < 1);				//do while petlja postoji zbog mogucnosti da se napravi prazan string ako se samo pritsne enter(\n, endl)
+	do
+	{
+		cout << "Prezime: "; getline(cin, surename);
+	} while (surename.length() < 1);
+
 	PIN = getPIN();
 	userGroup = getUserGroup();
 
@@ -21,15 +29,14 @@ User admin::Administrator::createNewUser() const
 
 int admin::Administrator::getNumberOfUsers(std::fstream& fileWithUsers) const
 {
-	if (fileWithUsers.is_open())		//exception
-	{
-		string line;
-		int numberOfLines = 0;
-		while (getline(fileWithUsers, line))
-			numberOfLines++;
-		fileWithUsers.seekg(0);
-		return numberOfLines;
-	}
+	if (!fileWithUsers.is_open())
+		fileWithUsers.open("test.txt", std::ios::in);
+	string line;
+	int numberOfLines = 0;
+	while (getline(fileWithUsers, line))
+		numberOfLines++;
+	fileWithUsers.seekg(0);
+	return numberOfLines;
 }
 
 void admin::Administrator::showAvailableCurrencies(std::fstream& fileWithCurrencies) const
@@ -79,8 +86,11 @@ string admin::Administrator::getUserName() const
 	std::fstream fileWithUsers("test.txt", std::ios::out | std::ios::in);
 	string username;
 
-	cout << "Korisnicko ime: ";
-	getline(cin, username);
+	do
+	{
+		cout << "Korisnicko ime: ";
+		getline(cin, username);
+	} while (username.length() < 1);					//korsitenej do while petlje je objasnjeno u funkciji createNewUser()
 	while (!isUserNameOkay(username, fileWithUsers))
 	{
 		cout << "Korisnicko ime je zauzeto. Unesite novo: ";
