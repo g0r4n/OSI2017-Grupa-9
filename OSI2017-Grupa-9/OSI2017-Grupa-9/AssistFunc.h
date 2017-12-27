@@ -17,6 +17,7 @@
 #include <exception>
 #include <locale>
 #include <cctype>
+#include <cstdlib>
 
 #define UserDataFile "test.txt.txt" //po sklapanju programa, direktorijume fajlova regulisati
 #define LogFile "InvalidLog.txt"

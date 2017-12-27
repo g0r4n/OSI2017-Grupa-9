@@ -1,0 +1,4 @@
+g0r4n            Goran            Marinkovic       6462  1
+mic              Mikrofon         Ekran            7787  0
+dzona            Nikola           Tramosljika      4466  1
+Char             stringic         potasijum        1111  0
