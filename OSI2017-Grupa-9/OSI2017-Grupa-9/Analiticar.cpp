@@ -105,19 +105,52 @@ void analiticar::Analiticar::billsDateOverview()
 	if (!file.is_open())
 		return;
 	string current;
-	cout << "Datum" << std::setw(12) << "Kupac" << std::setw(19) << "Proizvod" << std::setw(16) << "Kolicina "<<std::setw(5)<<"Cijena"<<endl;
+
+	cout << std::resetiosflags(std::ios::adjustfield);			// resetovanje 
+	cout << std::setiosflags(std::ios::left);					// poravnanje u lijevo
+	cout 
+		<< std::setw(15) 
+		<< "Datum" 
+		<< std::setw(12) 
+		<< "Kupac"
+		<< std::setw(19) 
+		<< "Proizvod"
+		<< std::setw(10) 
+		<< "Cijena"
+		<< std::setw(10)
+		<< "Kolicina"
+		<< std::setw(10)
+		<< "Ukupno"
+		<< endl;
+
 	while (std::getline(file, current))
 		{
+			
 			auto t = returnBillFromReadString(current);
 			std::vector<std::string> vec;
 			Bill::split(current, '#', vec);
 			Bill::Date date = vec[0];
-			if (date > start && date<finish)
+			if (date > start && date < finish)
 			{
-				std::cout <<vec[0] << " " <<  vec[1] << " "
-					<< std::setw(19) << vec[2] << " " << std::setw(9) << vec[3] << " " << std::setw(8) << vec[5] <<endl;
+				cout << std::resetiosflags(std::ios::adjustfield);			// resetovanje 
+				cout << std::setiosflags(std::ios::left);					// poravnanje u lijevo
+				cout
+					<< std::setw(15)
+					<< vec[0]
+					<< std::setw(12)
+					<< vec[1]
+					<< std::setw(19)
+					<< vec[2]
+					<< std::setw(10)
+					<< vec[3]
+					<< std::setw(10)
+					<< vec[4]
+					<< std::setw(10)
+					<< std::atof(vec[3].c_str()) * std::atof(vec[4].c_str())  // c_str se koristi zato sto funkcija atof trazi kao argument const char*, a c_str omogucava konverziju string->const char*
+					<< endl;
 			}
-		}
+
+	}
 
 	}
 

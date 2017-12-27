@@ -6,5 +6,4 @@ void main()
 	std::fstream file("test.txt", std::ios::in | std::ios::out);
 	runIt();
 	file.close();
-	cin.get(); cin.ignore();
 }
