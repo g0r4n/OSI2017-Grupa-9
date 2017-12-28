@@ -51,16 +51,29 @@ void admin::Administrator::showAvailableCurrencies(std::fstream& fileWithCurrenc
 	}
 }
 
+
 string admin::Administrator::getPIN() const 
 {
-	string PIN;
+	string PIN, validation_PIN;
+	bool isNotCorrect = true;
 	do
 	{
 		cout << "PIN: ";
-		getline(cin, PIN);
+		readPIN_hidden(PIN);
 		if (!isPINokay(PIN))
-			cout << "Pogresan unos!" << endl;
-	} while (!isPINokay(PIN));
+			cout << "Pogresan unos! Unesite ponovo!" << endl;
+		else
+		{
+			cout << "Potvrdite PIN: ";
+			readPIN_hidden(validation_PIN);
+			if (isPINokay(validation_PIN) && PIN == validation_PIN)
+				isNotCorrect = false;
+			else
+				cout << "Pogresan unos ili se PIN-ovi ne poklapaju!" << endl;
+		}
+	} while (isNotCorrect);
+
+
 	return PIN;
 }
 
@@ -113,7 +126,7 @@ bool admin::Administrator::isUserGroupOkay(const string userGroup) const
 			return true;
 		return false;
 	}
-	catch (std::invalid_argument& ex)	// u slucaju da se upise samo string(ili prazan string), stoi baca exception invalid_argument
+	catch (std::invalid_argument& ex)	// u slucaju da se upise samo string(ili prazan string), std::stoi baca exception invalid_argument
 	{
 		return false;
 	}
@@ -130,6 +143,33 @@ bool admin::Administrator::getUserGroup() const
 	}
 	userGroup = static_cast<bool>(std::stoi(ug_temp));
 	return userGroup;
+}
+
+void admin::readPIN_hidden(string& str)
+{
+	bool end = false;
+	char x;
+	do
+	{
+		x = _getch();
+		switch (x)
+		{
+		case 0:
+			cin.ignore();
+			break;
+		case 8:					//8- ASCII vrijednost za Backspace
+			str.erase(str.end() - 1);
+			break;
+		case 13:				//13- decimalna vrijednost za ENTER(new line)
+			end = true;
+			cout << endl;
+			break;
+		default:
+			str += x;
+			cout << '*';
+			break;
+		}
+	} while (!end);
 }
 
 bool admin::isPINokay(const string& PIN)
@@ -302,7 +342,7 @@ int admin::Administrator::menu() const
 				std::fstream file; file.open("test.txt");
 				this->userOverview(file);
 				file.close();
-				cout << "Pritisnite bilo sta da nastavite koristiti aplikaciju: "; getchar();
+				cout << "Pritisnite bilo sta da nastavite koristiti aplikaciju..."; getchar();
 				system("cls");
 			} break;
 			case 2:

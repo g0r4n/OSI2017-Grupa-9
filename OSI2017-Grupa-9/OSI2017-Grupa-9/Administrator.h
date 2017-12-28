@@ -14,8 +14,10 @@ namespace admin
 		void showAvailableCurrencies(std::fstream&) const;
 
 
-		
+		friend void readPIN_hidden(string&);
 		friend bool isPINokay(const string&);
+
+
 		string getPIN() const;
 		bool isUserNameOkay(const string,std::fstream&) const;
 		string getUserName() const;

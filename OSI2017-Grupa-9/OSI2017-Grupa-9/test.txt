@@ -1,5 +1,6 @@
 mic              Mikrofon         Ekran            7787  0
 dzona            Nikola           Tramosljika      4466  1
+festijana        Tijana           Bokic            6462  0
 Char             stringic         potasijum        1111  0
 test             t1               1                1245  1
 atest1           tes1             te               1245  0

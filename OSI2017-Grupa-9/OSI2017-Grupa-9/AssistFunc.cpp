@@ -48,7 +48,7 @@ std::tuple<string, string, string, string, bool> logIn()
 		getline(std::cin, locUserName);		
 
 		cout << "Unesite pristupnu sifru korisnika: ";
-		getline(std::cin, locPw);	
+		admin::readPIN_hidden(locPw);	
 
 		if (admin::isPINokay(locPw) && (std::get<0>(type = logInCheck(file, locUserName, locPw)) != "-1"))	
 		{
@@ -56,7 +56,12 @@ std::tuple<string, string, string, string, bool> logIn()
 		}
 		else
 		{
-			cout << "Neuspjesno logovanje na sistem. Pritisnite enter za ponovno unosenje podataka o korisniku, ili Esc za izlazak iz programa. \n"; //Skontati kako detektovati Esc
+			cout
+				<< "Neuspjesno logovanje na sistem."
+				<< endl
+				<< "Pritisnite enter za ponovno unosenje podataka o korisniku, ili Esc za izlazak iz programa.";
+			//rjesiti Esc
+
 			writeInvalidLogin(locUserName, locPw);
 
 			getchar();
