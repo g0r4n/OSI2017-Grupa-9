@@ -7,7 +7,7 @@ using namespace user;
 User admin::Administrator::createNewUser() const
 {
 	cout << "Unesite informacije o novom korisniku: " << endl;
-	string username,name, surename, PIN; bool userGroup;
+	string username, name, surename, PIN; bool userGroup;
 	string userGroup_temp;
 
 	username = getUserName();		//odraditi provjeru za "space" i sankcionisati je
@@ -15,11 +15,11 @@ User admin::Administrator::createNewUser() const
 	do
 	{
 		cout << "Ime: "; getline(cin, name);
-	} while (name.length() < 1);				//do while petlja postoji zbog mogucnosti da se napravi prazan string ako se samo pritsne enter(\n, endl)
+	} while (name.length() < 1 || name.at(0) == ' ');				//do while petlja postoji zbog mogucnosti da se napravi prazan string ako se samo pritsne enter(\n, endl)
 	do
 	{
 		cout << "Prezime: "; getline(cin, surename);
-	} while (surename.length() < 1);
+	} while (surename.length() < 1 || surename.at(0) == ' ');
 
 	PIN = getPIN();
 	userGroup = getUserGroup();
@@ -103,7 +103,7 @@ string admin::Administrator::getUserName() const
 	{
 		cout << "Korisnicko ime: ";
 		getline(cin, username);
-	} while (username.length() < 1);					//korsitenej do while petlje je objasnjeno u funkciji createNewUser()
+	} while (username.length() < 1 || username.at(0) == ' ');					//korsitenej do while petlje je objasnjeno u funkciji createNewUser()
 	while (!isUserNameOkay(username, fileWithUsers))
 	{
 		cout << "Korisnicko ime je zauzeto. Unesite novo: ";
@@ -147,6 +147,7 @@ bool admin::Administrator::getUserGroup() const
 
 void admin::readPIN_hidden(string& str)
 {
+	str.clear();
 	bool end = false;
 	char x;
 	do

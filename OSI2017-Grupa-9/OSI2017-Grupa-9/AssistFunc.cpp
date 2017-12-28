@@ -44,7 +44,6 @@ std::tuple<string, string, string, string, bool> logIn()
 	std::tuple<string, string, string, string, bool> type;
 	while (!quit)
 	{
-		locPw.clear();
 		cout << "Unesite korisnicko ime korisnika: ";
 		getline(std::cin, locUserName);		
 
@@ -99,4 +98,53 @@ int runIt()
 	return 0;
 }
 
+bool leapYear(int year)
+{
+	if (year % 4 == 0)
+	{
+		if (year % 100 == 0)
+		{
+			if (year % 400 == 0)
+				return true;
+			else
+				return false;
+		}
+		else
+			return true;
+	}
+	else
+		return false;
+}
+
+bool isDateValid(int month, int day, int year)
+{
+	if (day < 1 || month < 1)
+		return false;
+	bool validation = true;
+	switch (month)
+	{
+	case 2:
+		if (leapYear(year))
+		{
+			if (day > 29)
+				validation = false;
+		}
+			else
+				if (day > 28)
+					validation = false;
+		break;
+	case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+		if (day > 31)
+			validation = false;
+		break;
+	case 4: case 6: case 9: case 11:
+		if (day > 30)
+			validation = false;
+		break;
+	default:
+		validation = false;
+		break;
+	}
+	return validation;
+}
 

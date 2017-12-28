@@ -32,4 +32,6 @@ using std::getline;
 void writeInvalidLogin(string, string);
 std::tuple<string, string, string, string, bool> logInCheck(std::fstream& file, string n, string p);
 std::tuple<string, string, string, string, bool> logIn();
+bool isDateValid(int, int, int); //americki redoslijed (mm,dd,gggg)
+bool leapYear(int);
 int runIt();

@@ -46,19 +46,23 @@ void analiticar::Analiticar::billsDateOverview()
 	std::vector<string> help;
 	while (!quit)
 	{
-		cout << "Unesite pocetni datum u obliku dd/mm/gggg:"<<endl;
+		cout << "Unesite pocetni datum u obliku dd/mm/gggg:" << endl;
 		string temp;
 		std::getline(cin, temp);
-		if (temp.length() != 10)
+		int count = 0;
+		for (int i = 0; temp[i]; i++)
+			if (temp[i] == '/')
+				count++;
+		if (temp.length() != 10 || count != 2)
 		{
-			cout << "Datum nije ispravan"<<endl; //ubaciti test za validan datum
+			cout << "Datum nije ispravan" << endl; //ubaciti test za validan datum
 			quit = 0;
 		}
 		else
 		{
-			
+			help.clear();
 			Bill::split(temp, '/', help);
-			if (isdigit(help[0][0]) && isdigit(help[0][1]) && isdigit(help[1][0]) && isdigit(help[1][1]) && isdigit(help[2][0]) && isdigit(help[2][1]) && isdigit(help[2][2]) && isdigit(help[2][3]))
+			if (isdigit(help[0][0]) && isdigit(help[0][1]) && isdigit(help[1][0]) && isdigit(help[1][1]) && isdigit(help[2][0]) && isdigit(help[2][1]) && isdigit(help[2][2]) && isdigit(help[2][3]) && isDateValid(std::stoi(help[1]), std::stoi(help[0]), std::stoi(help[2])))
 			{
 				
 				quit = 1;
@@ -76,15 +80,20 @@ void analiticar::Analiticar::billsDateOverview()
 		cout << "Unesite krajnji datum u obliku dd/mm/gggg:" << endl;
 		string temp;
 		std::getline(cin, temp);
-		if (temp.length() != 10)
+		int count =0;
+		for (int i = 0; temp[i]; i++)
+			if (temp[i] == '/')
+				count++;
+		if (temp.length() != 10 || count != 2)
 		{
 			cout << "Datum nije ispravan"<<endl;
 			quit = 0;
 		}
 		else
 		{
+			help.clear();
 			Bill::split(temp, '/', help);
-			if (isdigit(help[0][0]) && isdigit(help[0][1]) && isdigit(help[1][0]) && isdigit(help[1][1]) && isdigit(help[2][0]) && isdigit(help[2][1]) && isdigit(help[2][2]) && isdigit(help[2][3]))
+			if (isdigit(help[0][0]) && isdigit(help[0][1]) && isdigit(help[1][0]) && isdigit(help[1][1]) && isdigit(help[2][0]) && isdigit(help[2][1]) && isdigit(help[2][2]) && isdigit(help[2][3]) && isDateValid(std::stoi(help[1]), std::stoi(help[0]), std::stoi(help[2])))
 			{
 				
 				quit = 1;
