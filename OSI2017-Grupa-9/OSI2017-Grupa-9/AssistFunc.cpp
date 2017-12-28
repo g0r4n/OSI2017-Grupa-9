@@ -44,6 +44,7 @@ std::tuple<string, string, string, string, bool> logIn()
 	std::tuple<string, string, string, string, bool> type;
 	while (!quit)
 	{
+		locPw.clear();
 		cout << "Unesite korisnicko ime korisnika: ";
 		getline(std::cin, locUserName);		
 
