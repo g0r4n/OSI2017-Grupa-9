@@ -157,8 +157,12 @@ void admin::readPIN_hidden(string& str)
 		case 0:
 			cin.ignore();
 			break;
-		case 8:					//8- ASCII vrijednost za Backspace
-			str.erase(str.end() - 1);
+		case 8:				//8- ASCII vrijednost za Backspace
+			if (str.length() > 0)
+			{
+				str.erase(str.end() - 1);
+				cout << x << ' ' << x;
+			}
 			break;
 		case 13:				//13- decimalna vrijednost za ENTER(new line)
 			end = true;
