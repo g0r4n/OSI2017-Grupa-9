@@ -42,26 +42,60 @@ Bill returnBillFromReadString(string input)
 
 void analiticar::Analiticar::billsDateOverview()
 {
-	string d, m, g;
 	bool quit = 0;
+	std::vector<string> help;
 	while (!quit)
 	{
-		cout << "Unesite pocetni datum u obliku dd/mm/gg:"<<endl;
-		std::getline(std::cin, d, (char)'/');
-		std::getline(std::cin, m, (char)'/'); 
-		std::getline(std::cin, g);
-		//if((std::stoi(d)>=31)||(std::stoi(d)<1)||(std::)			ubaciti test za validan datum
-		quit = 1;
+		cout << "Unesite pocetni datum u obliku dd/mm/gggg:"<<endl;
+		string temp;
+		std::getline(cin, temp);
+		if (temp.length() != 10)
+		{
+			cout << "Datum nije ispravan"<<endl; //ubaciti test za validan datum
+			quit = 0;
+		}
+		else
+		{
+			
+			Bill::split(temp, '/', help);
+			if (isdigit(help[0][0]) && isdigit(help[0][1]) && isdigit(help[1][0]) && isdigit(help[1][1]) && isdigit(help[2][0]) && isdigit(help[2][1]) && isdigit(help[2][2]) && isdigit(help[2][3]))
+			{
+				
+				quit = 1;
+			}
+			else cout << "Datum nije ispravan"<<endl;
+		}
+		
 	}
-	cout << endl<<endl;
-	Bill::Date start(std::stoi(d), std::stoi(m), std::stoi(g)); quit = 0;
+	Bill::Date start(std::stoi(help[0]), std::stoi(help[1]), std::stoi(help[2]));
+	cout << endl<< endl;
+	quit = 0;
+	help.clear();
 	while (!quit)
 	{
-		cout << "Unesite krajnji datum u obliku dd/mm/gg:"<<endl;
-		std::getline(std::cin, d, (char)'/'); std::getline(std::cin, m, (char)'/'); std::getline(std::cin, g); //isto rijesiti validnost datuma!
-		quit = 1;
+		cout << "Unesite krajnji datum u obliku dd/mm/gggg:" << endl;
+		string temp;
+		std::getline(cin, temp);
+		if (temp.length() != 10)
+		{
+			cout << "Datum nije ispravan"<<endl;
+			quit = 0;
+		}
+		else
+		{
+			Bill::split(temp, '/', help);
+			if (isdigit(help[0][0]) && isdigit(help[0][1]) && isdigit(help[1][0]) && isdigit(help[1][1]) && isdigit(help[2][0]) && isdigit(help[2][1]) && isdigit(help[2][2]) && isdigit(help[2][3]))
+			{
+				
+				quit = 1;
+			}
+			else cout << "Datum nije ispravan"<<endl;
+		}
+
+
 	}
-	Bill::Date finish(std::stoi(d), std::stoi(m), std::stoi(g));
+	Bill::Date finish(std::stoi(help[0]), std::stoi(help[1]), std::stoi(help[2]));
+
 	if (finish < start)
 	{
 		cout << "Uneseni datumi nisu ispravni"<<endl; return;
