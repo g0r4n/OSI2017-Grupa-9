@@ -22,6 +22,7 @@
 #define UserDataFile "test.txt.txt" //po sklapanju programa, direktorijume fajlova regulisati
 #define LogFile "InvalidLog.txt"
 #define ConfigFile "ConfigFile.txt"
+#define CurrenciesFile "Currencies.txt"
 
 using std::string;
 using std::cout;

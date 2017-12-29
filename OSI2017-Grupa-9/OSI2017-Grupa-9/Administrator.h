@@ -11,11 +11,12 @@ namespace admin
 
 		User createNewUser() const;
 		int getNumberOfUsers(std::fstream&) const;
-		void showAvailableCurrencies(std::fstream&) const;
+		void showAvailableCurrencies() const;
 
 
 		friend void readPIN_hidden(string&);
 		friend bool isPINokay(const string&);
+		friend bool isCurrencyOkay(const string&);
 
 
 		string getPIN() const;

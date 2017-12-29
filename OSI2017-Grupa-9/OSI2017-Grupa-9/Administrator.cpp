@@ -3,7 +3,6 @@
 using namespace admin;
 using namespace user;
 
-
 User admin::Administrator::createNewUser() const
 {
 	cout << "Unesite informacije o novom korisniku: " << endl;
@@ -39,16 +38,18 @@ int admin::Administrator::getNumberOfUsers(std::fstream& fileWithUsers) const
 	return numberOfLines;
 }
 
-void admin::Administrator::showAvailableCurrencies(std::fstream& fileWithCurrencies) const
+void admin::Administrator::showAvailableCurrencies() const
 {
-	if (fileWithCurrencies.is_open())		//exception
-	{
-		fileWithCurrencies.seekg(0);
-		cout << "Dostupne valute su: " << endl;
-		string line;
-		while (fileWithCurrencies >> line)
-			cout << line << endl;
-	}
+	cout
+		<< "Dostupne valute su: "
+		<< endl
+		<< "KM (Konvertibilna marka)"
+		<< endl
+		<< "$ (Americki dolar)"
+		<< endl
+		<< "e (EURO)"
+		<< endl;
+	
 }
 
 
@@ -185,6 +186,13 @@ bool admin::isPINokay(const string& PIN)
 		if (!(c >= '0' && c <= '9'))
 			return false;
 	return true;
+}
+
+bool admin::isCurrencyOkay(const string &currency)
+{
+	if (currency == "KM" || currency == "$" || currency == "e")
+		return true;
+	return false;
 }
 
 admin::Administrator::Administrator(){}
@@ -324,8 +332,17 @@ void admin::Administrator::changeCurrency(std::fstream& fileWithCurrencies) cons
 	if (fileWithCurrencies.is_open())			// dovrsiti sa tramom 		gdje se cuvaju podaci o valutama?
 	{
 		string currency;
-		showAvailableCurrencies(fileWithCurrencies);
+		showAvailableCurrencies();
 		cout << "Izaberite valutu: "; getline(cin, currency);
+		while (!isCurrencyOkay(currency))
+		{
+			cout << "Valuta ne postoji! Unesite ponovo: ";
+			getline(cin, currency);
+		}
+		fileWithCurrencies.close();
+		fileWithCurrencies.open(CurrenciesFile, std::ios::out | std::ios::trunc);	//otvori file i obrise sve iz njega
+		cout << "Valuta uspjesno promjenjena u: " << currency << endl;
+		fileWithCurrencies << currency;
 	}
 }
 
@@ -335,7 +352,15 @@ int admin::Administrator::menu() const
 	std::string choice;
 	while (!quit)
 	{
-		cout << endl << "1.Pregled svih korisnika" << endl << "2.Dodavanje novog korisnika" << endl << "3.Brisanje postojeceg korisnika" << endl << "4.Promjena valute" << endl << "5.Odjava korisnika" << endl << "6.Izlazak iz programa" << endl;
+		cout 
+			<< endl 
+			<< "1.Pregled svih korisnika" << endl 
+			<< "2.Dodavanje novog korisnika" << endl 
+			<< "3.Brisanje postojeceg korisnika" << endl 
+			<< "4.Promjena valute" << endl 
+			<< "5.Odjava korisnika" << endl 
+			<< "6.Izlazak iz programa" << endl;
+
 		cout << "Izaberite jednu od ponudjenih opcija: ";	getline(cin, choice);
 		if (isdigit(choice[0]))
 		{
@@ -371,7 +396,7 @@ int admin::Administrator::menu() const
 			case 4:
 			{
 				system("cls");
-				std::fstream file; file.open(ConfigFile);
+				std::fstream file; file.open(CurrenciesFile);
 				this->changeCurrency(file);
 				file.close();
 				cout << "Pritisnite bilo sta da nastavite koristiti aplikaciju: "; getchar();
