@@ -160,8 +160,8 @@ void admin::readPIN_hidden(string& str)
 		case 8:				//8- ASCII vrijednost za Backspace
 			if (str.length() > 0)
 			{
-				str.erase(str.end() - 1);
-				cout << x << ' ' << x;
+				str.erase(str.end() - 1);		//obrise zadnji karakter u stringu
+				cout << x << ' ' << x;			//bacspace se vrati karakter unazad, prepise razmak preko njega, i opet se vrati karakter(preko space) unazad;
 			}
 			break;
 		case 13:				//13- decimalna vrijednost za ENTER(new line)
