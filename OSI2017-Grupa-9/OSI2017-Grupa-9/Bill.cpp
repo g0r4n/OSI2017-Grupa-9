@@ -110,6 +110,7 @@ bool Bill::validation(std::ifstream& file) // provjerava da li je racun validan 
 	return false;
 }
 
+
 void Bill::writeBillToFile(std::ifstream &file) // za format1 
 {
 	std::vector<std::string> vec;
@@ -306,19 +307,22 @@ bool Bill::Date::operator>(const Bill::Date &other)
 {
 	if (year > other.year)	
 		return true;
-	if (month > other.month)
+	else if (year == other.year && month > other.month)
 		return true;
-	return day > other.day;
+	else if (year == other.year && month == other.month && day > other.day)
+		return true;
+	return false;
 }
 
 bool Bill::Date::operator<(const Bill::Date& other)
 {
-	if (year < other.year)  
+	if (year < other.year)
 		return true;
-	if (month < other.month)
+	else if (year == other.year && month < other.month)
 		return true;
-
-	return day < other.day;
+	else if (year == other.year && month == other.month && day < other.day)
+		return true;
+	return false;
 }
 
 
