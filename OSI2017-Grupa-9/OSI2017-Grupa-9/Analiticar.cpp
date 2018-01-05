@@ -2,6 +2,9 @@
 #include "Bill.h"
 #include <string.h>
 #include<iomanip>
+#include "Administrator.h"
+
+
 analiticar::Analiticar::Analiticar() {}
 
 analiticar::Analiticar::Analiticar(const std::tuple<string, string, string, string, bool>& userInfo) : user::User(userInfo) {}
@@ -151,11 +154,11 @@ void analiticar::Analiticar::billsDateOverview()
 					<< std::setw(19)
 					<< vec[2]
 					<< std::setw(10)
-					<< vec[3]
+					<< vec[3] + admin::getCurrentCurrency()
 					<< std::setw(10)
 					<< vec[4]
 					<< std::setw(10)
-					<< std::atof(vec[3].c_str()) * std::atof(vec[4].c_str())  // c_str se koristi zato sto funkcija atof trazi kao argument const char*, a c_str omogucava konverziju string->const char*
+					<< vec[5] + admin::getCurrentCurrency()
 					<< endl;
 			}
 

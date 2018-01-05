@@ -195,6 +195,14 @@ bool admin::isCurrencyOkay(const string &currency)
 	return false;
 }
 
+string admin::getCurrentCurrency()
+{
+	std::fstream fileWithCurrencies(CurrenciesFile, std::ios::in);
+	string currency;
+	fileWithCurrencies >> currency;
+	return currency;
+}
+
 admin::Administrator::Administrator(){}
 
 admin::Administrator::Administrator(const std::tuple<string, string, string, string, bool>& userInfo) : user::User(userInfo) {}

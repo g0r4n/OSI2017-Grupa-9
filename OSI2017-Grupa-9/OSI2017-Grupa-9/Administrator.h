@@ -17,6 +17,7 @@ namespace admin
 		friend void readPIN_hidden(string&);
 		friend bool isPINokay(const string&);
 		friend bool isCurrencyOkay(const string&);
+		friend string getCurrentCurrency();
 
 
 		string getPIN() const;
