@@ -130,37 +130,53 @@ void analiticar::Analiticar::billsDateOverview()
 		<< std::setw(10) 
 		<< "Cijena"
 		<< std::setw(10)
+		<< "PDV(17%)"
+		<< std::setw(10)
 		<< "Kolicina"
 		<< std::setw(10)
 		<< "Ukupno"
 		<< endl;
 
 	while (std::getline(file, current))
+	{
+		int numberOfCharacters;
+		auto t = returnBillFromReadString(current);
+		std::vector<std::string> vec;
+		Bill::split(current, '#', vec);
+		Bill::Date date = vec[0];
+		if (date > start && date < finish)
 		{
-			
-			auto t = returnBillFromReadString(current);
-			std::vector<std::string> vec;
-			Bill::split(current, '#', vec);
-			Bill::Date date = vec[0];
-			if (date > start && date < finish)
-			{
-				cout << std::resetiosflags(std::ios::adjustfield);			// resetovanje 
-				cout << std::setiosflags(std::ios::left);					// poravnanje u lijevo
-				cout
-					<< std::setw(15)
-					<< vec[0]
-					<< std::setw(12)
-					<< vec[1]
-					<< std::setw(19)
-					<< vec[2]
-					<< std::setw(10)
-					<< vec[3] + admin::getCurrentCurrency()
-					<< std::setw(10)
-					<< vec[4]
-					<< std::setw(10)
-					<< vec[5] + admin::getCurrentCurrency()
-					<< endl;
-			}
+			cout << std::resetiosflags(std::ios::adjustfield);			// resetovanje 
+			cout << std::setiosflags(std::ios::left);					// poravnanje u lijevo
+			cout
+				<< std::setw(15)
+				<< vec[0]
+				<< std::setw(12)
+				<< vec[1]
+				<< std::setw(19)
+				<< vec[2]
+				<< std::setw(10)
+				<< vec[3] + admin::getCurrentCurrency()
+				<< std::setw(10)
+				<< (std::to_string((std::stod(vec[3]) * 0.17))).substr(0,4) + admin::getCurrentCurrency()
+				/*
+					U prethodnoj liniji se desi sledece:
+						1. vec[3] koji je string(predstavlja informaciju o cijeni) se pretvara u double i mnozi se sa
+							0.17(pdv)
+						2. dati proizvod se pretvara u string pomocu funkcije std::to_string()
+						3. na kraju, iz tog finalnog stringa se pomocu funkcije substr izvlace samo 4 karaktera
+						4. novi string se spaja sa informacijom o koristenoj valuti
+
+
+						Vrsi se izvlacenje samo 4 karaktera da bi dobili ispis tipa: 1.78(4 karaktera) i onda
+						se spaja sa informacijom o valuti da se na kraju dobije ispis tipa: 1.78e
+				*/
+				<< std::setw(10)
+				<< vec[4]
+				<< std::setw(10)
+				<< vec[5] + admin::getCurrentCurrency()
+				<< endl;
+		}
 
 	}
 
