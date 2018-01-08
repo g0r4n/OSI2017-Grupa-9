@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskName": "task-OSI2017-Grupa-9",
+      "appliesTo": "/",
+      "type": "launch"
+    }
+  ]
+}

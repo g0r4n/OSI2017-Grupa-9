@@ -1,4 +1,9 @@
 #pragma once
+
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
 #include"AssistFunc.h"
 
 namespace fs = std::experimental::filesystem;
@@ -20,6 +25,7 @@ public:
 	{
 		int day, month, year;
 
+		Date();
 		Date(int, int, int);
 		Date(std::string&);
 		Date(const Date&);
@@ -29,6 +35,7 @@ public:
 		friend std::ostream& operator<<(std::ostream&, const Date&);
 	};
 
+	Bill();
 	Bill(std::string customer, Date date, std::vector<Product> products);
 	Bill(const Bill&);
 	Bill& operator=(const Bill&);
@@ -42,8 +49,16 @@ private:
 	Date date;
 	std::vector<Product> products;
 	friend std::ostream& operator<<(std::ostream&, const Bill&);
-	static bool validation(std::ifstream&);
-	static void writeBillToFile(std::ifstream&);
-	//dodavanje nove funkcionalnosti
+	static int serialNumber;
+	static bool validationFormat1(std::ifstream&, Bill&);
+	static bool validationFormat2(std::ifstream&, Bill&);
+	static bool validationFormat3(std::ifstream&, Bill&);
+	static bool validationFormat4(std::ifstream&, Bill&);
+	static bool validationFormat5(std::ifstream&, Bill&, std::string, Date);
+	static void writeBillToFile(Bill);
 	static inline std::string &rtrim(std::string &s);
+	static int getFormat(std::ifstream&);
+	static void saveFileToObradjeniRacuni(std::string, std::ifstream&, Bill);
+	static void saveFileToRacuniSaGreskom(std::string, std::ifstream&);
+	static std::string removeDoubleCharacters(std::string, char);
 };
