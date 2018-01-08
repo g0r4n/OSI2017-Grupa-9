@@ -19,6 +19,7 @@ namespace admin
 		friend bool isCurrencyOkay(const string&);
 		friend string getCurrentCurrency();
 
+
 		string getPIN() const;
 		bool isUserNameOkay(const string,std::fstream&) const;
 		string getUserName() const;
