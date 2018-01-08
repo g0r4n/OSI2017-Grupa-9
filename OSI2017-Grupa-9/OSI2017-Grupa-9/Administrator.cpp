@@ -146,6 +146,7 @@ bool admin::Administrator::getUserGroup() const
 	return userGroup;
 }
 
+
 void admin::readPIN_hidden(string& str)
 {
 	str.clear();
@@ -193,6 +194,14 @@ bool admin::isCurrencyOkay(const string &currency)
 	if (currency == "KM" || currency == "$" || currency == "e")
 		return true;
 	return false;
+}
+
+string admin::getCurrentCurrency()
+{
+	std::fstream file(CurrenciesFile, std::ios::in);
+	string s;
+	file >> s;
+	return s;
 }
 
 admin::Administrator::Administrator(){}

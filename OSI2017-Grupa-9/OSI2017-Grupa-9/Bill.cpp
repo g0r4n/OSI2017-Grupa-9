@@ -14,7 +14,7 @@ Bill::Bill(const Bill &other) : date(other.date)
 	std::copy(products.begin(), products.end(), this->products.begin());
 }
 
-Bill & Bill::operator=(const Bill &other)
+Bill& Bill::operator=(const Bill &other)
 {
 	if (this != &other)
 	{

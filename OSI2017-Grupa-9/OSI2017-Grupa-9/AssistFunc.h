@@ -23,6 +23,7 @@
 #define LogFile "InvalidLog.txt"
 #define ConfigFile "ConfigFile.txt"
 #define CurrenciesFile "Currencies.txt"
+#define PDV 0.17
 
 using std::string;
 using std::cout;
