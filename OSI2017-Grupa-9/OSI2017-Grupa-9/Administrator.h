@@ -33,6 +33,7 @@ namespace admin
 		~Administrator();
 		void userOverview(std::fstream&) const;
 		void addNewUser(std::fstream&) const;
+		void editUser(std::fstream&) const;
 		void deleteUser(std::fstream&) const;
  		void changeCurrency(std::fstream&) const;		
 		bool isLogInSuccesfull() const;

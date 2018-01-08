@@ -273,6 +273,112 @@ void admin::Administrator::addNewUser(std::fstream& fileWithUsers) const
 
 }
 
+void admin::Administrator::editUser(std::fstream& fileWithUsers) const
+{
+	string username_temp;
+	cout << "Unesite korisnicko ime(username) korisnika kom zelite promjeniti informacije: ";
+	getline(cin, username_temp);
+	std::vector<User> arr;
+	for (User pom; fileWithUsers >> pom; arr.push_back(pom));
+	User toEdit({ username_temp, "","","",false });
+	auto exist = std::find(arr.begin(), arr.end(), toEdit);
+	/*
+	Ako postoji trazeni element unutar vektora(tacnije unutar fajla koji je ucitan u vektor),
+	tada ce exist biti iterator na taj element.
+	Ako ne postoji, exist ce biti pokazivac na element POSLIJE POSLJEDNJEG unutar vektora(klasa std::vector je tako
+	realizovana da je njen "end" element poslije posljednjeg.
+	*/
+
+	if (exist != arr.end())
+	{
+		string choice;
+		int function;
+		do
+		{
+			cout
+				<< '\t' << "1. Korisnicko ime(username)" << endl
+				<< '\t' << "2. Ime" << endl
+				<< '\t' << "3. Prezime" << endl
+				<< '\t' << "4. PIN" << endl
+				<< '\t' << "5. Korisnicu grupu" << endl
+				<< '\t' << "6. Sve" << endl;
+			do
+			{
+				cout << "Izaberite koju/e informaciju/e o korisniku zelite promjeniti(unesite broj, npr. 2 za ime) : ";
+				cin >> function;
+				cin.ignore();
+			} while (function < 1 || function > 6);
+
+
+			switch (function)
+			{
+
+			case 1:
+			{
+				string username_temp;
+				cout << "Unesite novo korisnicko ime(username) za datog korisnika: ";
+				getline(cin, username_temp);
+				exist->setUserName(username_temp);
+				break;
+			}
+			case 2:
+			{
+				string name_temp;
+				cout << "Unesite novo ime za datog korisnika: ";
+				getline(cin, name_temp);
+				exist->setName(name_temp);
+				break;
+			}
+			case 3:
+			{
+				string surename_temp;
+				cout << "Unesite novo prezime za datog korisnika: ";
+				getline(cin, surename_temp);
+				exist->setSureName(surename_temp);
+				break;
+			}
+			case 4:
+			{
+				cout << "Unesite novi ";	// funkcija getPIN ce ispisati PIN: 
+				exist->setPIN(getPIN());
+				break;
+			}
+			case 5:
+			{
+				bool userGroup_temp;
+				cout << "Unesite novu korisnicku grupu" << endl;
+				exist->setUserGroup(getUserGroup());
+				break;
+			}
+			case 6:
+			{
+				*exist = createNewUser();
+				break;
+			}
+			default:
+			{
+				cout << "Pogresan unos!" << endl;
+				break;
+			}
+
+			}
+
+			cout << "Ako zelite prekinuti koristenje ove funkcije, unesite Q."
+				<< "Ako zelite nastaviti, pritisnite bilo sta...";
+			getline(cin, choice);
+		} while (choice != "Q");
+
+		fileWithUsers.close();
+		fileWithUsers.open("test.txt", std::ios::out | std::ios::trunc);	//brise sve iz datoteke i onda upisuje sortirane u tu istu
+		for (User &x : arr)
+			fileWithUsers << x << endl;
+		fileWithUsers.close();
+	}
+	else
+		cout << "Korisnik sa tim korisnickim imenom ne postoji!" << endl;
+	
+}
+
 void admin::Administrator::deleteUser(std::fstream& fileWithUsers) const
 {
 	if (!fileWithUsers.is_open())
@@ -299,14 +405,6 @@ void admin::Administrator::deleteUser(std::fstream& fileWithUsers) const
 	else
 	{
 		std::vector<User> arr;
-		/*while (static_cast<int>(fileWithUsers.tellg()) != EOF)
-		{
-			User pom;
-			fileWithUsers >> pom;
-			arr.push_back(pom);
-		}*/
-
-
 		for (User pom; fileWithUsers >> pom; arr.push_back(pom));
 		fileWithUsers.close();
 
@@ -364,10 +462,11 @@ int admin::Administrator::menu() const
 			<< endl 
 			<< "1.Pregled svih korisnika" << endl 
 			<< "2.Dodavanje novog korisnika" << endl 
-			<< "3.Brisanje postojeceg korisnika" << endl 
-			<< "4.Promjena valute" << endl 
-			<< "5.Odjava korisnika" << endl 
-			<< "6.Izlazak iz programa" << endl;
+			<< "3.Promjena informacija o postojecem korisniku" << endl
+			<< "4.Brisanje postojeceg korisnika" << endl 
+			<< "5.Promjena valute" << endl 
+			<< "6.Odjava korisnika" << endl 
+			<< "7.Izlazak iz programa" << endl;
 
 		cout << "Izaberite jednu od ponudjenih opcija: ";	getline(cin, choice);
 		if (isdigit(choice[0]))
@@ -396,12 +495,21 @@ int admin::Administrator::menu() const
 			{
 				system("cls");
 				std::fstream file; file.open("test.txt");
-				this->deleteUser(file);
+				this->editUser(file);
 				file.close();
 				cout << "Pritisnite bilo sta da nastavite koristiti aplikaciju: "; getchar();
 				system("cls");
 			} break;
 			case 4:
+			{
+				system("cls");
+				std::fstream file; file.open("test.txt");
+				this->deleteUser(file);
+				file.close();
+				cout << "Pritisnite bilo sta da nastavite koristiti aplikaciju: "; getchar();
+				system("cls");
+			} break;
+			case 5:
 			{
 				system("cls");
 				std::fstream file; file.open(CurrenciesFile);
@@ -410,11 +518,11 @@ int admin::Administrator::menu() const
 				cout << "Pritisnite bilo sta da nastavite koristiti aplikaciju: "; getchar();
 				system("cls");
 			} break;
-			case 5:
+			case 6:
 			{   system("cls");
 			return 0;
 			}
-			case 6:
+			case 7:
 				return 1;
 			default:
 			{

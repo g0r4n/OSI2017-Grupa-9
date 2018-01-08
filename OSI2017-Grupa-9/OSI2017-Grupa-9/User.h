@@ -10,6 +10,8 @@ namespace user
 	protected:
 
 		std::tuple<string,string, string, string, bool> userInfo;			//ime, prezime, PIN, korisnicka grupa(0-ADMIN, 1-ANALITICAR)
+
+
 	public:
 
 		User();
@@ -17,6 +19,12 @@ namespace user
 		~User();
 		
 		string getUserName() const;
+
+		void setUserName(const string&);
+		void setName(const string&);
+		void setSureName(const string&);
+		void setPIN(const string&);
+		void setUserGroup(const bool&);
 
 		bool operator<(const User&) const;
 		bool operator>(const User&) const;

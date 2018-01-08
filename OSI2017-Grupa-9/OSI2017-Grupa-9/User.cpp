@@ -7,6 +7,31 @@ string user::User::getUserName() const
 	return std::get<0>(userInfo);
 }
 
+void user::User::setUserName(const string& newUserName)
+{
+	std::get<0>(userInfo) = newUserName;
+}
+
+void user::User::setName(const string &newName)
+{
+	std::get<1>(userInfo) = newName;
+}
+
+void user::User::setSureName(const string &newSureName)
+{
+	std::get<2>(userInfo) = newSureName;
+}
+
+void user::User::setPIN(const string &newPin)
+{
+	std::get<3>(userInfo) = newPin;
+}
+
+void user::User::setUserGroup(const bool &newUserGroup)
+{
+	std::get<4>(userInfo) = newUserGroup;
+}
+
 User::User(){}
 
 user::User::User(const std::tuple<string,string, string, string, bool>& userInfo)

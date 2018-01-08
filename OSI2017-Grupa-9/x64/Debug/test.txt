@@ -1,3 +1,3 @@
-corke            Bojan            Coric            1234  0
-g0r4n            Goran            Marinkovic       6462  1
-dzona            Nikola           Tramosljika      4466  1
+corke            Bojan            Coric            1234  1
+goci             Goran            Marinkovic       6462  1
+dzona            Nikola           Tramosljika      4466  0
