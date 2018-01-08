@@ -1,1 +1,1 @@
-#static int
+#static int serialNumber = 1
