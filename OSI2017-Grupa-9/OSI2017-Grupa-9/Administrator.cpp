@@ -455,7 +455,7 @@ void admin::Administrator::changeCurrency(std::fstream& fileWithCurrencies) cons
 int admin::Administrator::menu() const
 {
 	bool quit = 0;
-	std::string choice;
+	string choice;
 	while (!quit)
 	{
 		cout 
