@@ -58,7 +58,7 @@ void analiticar::Analiticar::billsDateOverview()
 				count++;
 		if (temp.length() != 10 || count != 2)
 		{
-			cout << "Datum nije ispravan" << endl; //ubaciti test za validan datum
+			cout << "Datum nije ispravan" << endl; 
 			quit = 0;
 		}
 		else
@@ -139,7 +139,6 @@ void analiticar::Analiticar::billsDateOverview()
 
 	while (std::getline(file, current))
 	{
-		int numberOfCharacters;
 		auto t = returnBillFromReadString(current);
 		std::vector<std::string> vec;
 		Bill::split(current, '#', vec);
@@ -182,6 +181,140 @@ void analiticar::Analiticar::billsDateOverview()
 
 	}
 
+	void analiticar::Analiticar::billsProductOverview()
+	{
+		system("cls");
+		std::fstream file; file.open("Racuni za ispis.txt");
+		if (!file.is_open())
+			return;
+		string current, localProduct;
+		bool quit = 0;
+		while (!quit)
+		{
+			cout << "Unesite ime proizvoda:";
+			std::getline(cin, localProduct);
+			if (localProduct != " " && localProduct != "")
+				quit = 1;
+		}
+
+		cout << std::resetiosflags(std::ios::adjustfield);			
+		cout << std::setiosflags(std::ios::left);					
+		cout
+			<< std::setw(15)
+			<< "Datum"
+			<< std::setw(12)
+			<< "Kupac"
+			<< std::setw(19)
+			<< "Proizvod"
+			<< std::setw(10)
+			<< "Cijena"
+			<< std::setw(10)
+			<< "PDV(17%)"
+			<< std::setw(10)
+			<< "Kolicina"
+			<< std::setw(10)
+			<< "Ukupno"
+			<< endl;
+
+		while (std::getline(file, current))
+		{
+			auto t = returnBillFromReadString(current);
+			std::vector<std::string> vec;
+			Bill::split(current, '#', vec);
+			Bill::Date date = vec[0];
+			if (vec[2]==localProduct)
+			{
+				cout << std::resetiosflags(std::ios::adjustfield);			 
+				cout << std::setiosflags(std::ios::left);					
+				cout
+					<< std::setw(15)
+					<< vec[0]
+					<< std::setw(12)
+					<< vec[1]
+					<< std::setw(19)
+					<< vec[2]
+					<< std::setw(10)
+					<< vec[3] + admin::getCurrentCurrency()
+					<< std::setw(10)
+					<< (std::to_string((std::stod(vec[3]) * 0.17))).substr(0, 4) + admin::getCurrentCurrency()
+					<< std::setw(10)
+					<< vec[4]
+					<< std::setw(10)
+					<< vec[5] + admin::getCurrentCurrency()
+					<< endl;
+			}
+
+		}
+
+	}
+
+	void analiticar::Analiticar::billsBuyerOverview()
+	{
+		system("cls");
+		std::fstream file; file.open("Racuni za ispis.txt");
+		if (!file.is_open())
+			return;
+		string current, localBuyer;
+		bool quit = 0;
+		while (!quit)
+		{
+			cout << "Unesite ime kupca:";
+			std::getline(cin, localBuyer);
+			if (localBuyer != " " && localBuyer!= "")
+				quit = 1;
+		}
+
+		cout << std::resetiosflags(std::ios::adjustfield);			
+		cout << std::setiosflags(std::ios::left);					
+		cout
+			<< std::setw(15)
+			<< "Datum"
+			<< std::setw(12)
+			<< "Kupac"
+			<< std::setw(19)
+			<< "Proizvod"
+			<< std::setw(10)
+			<< "Cijena"
+			<< std::setw(10)
+			<< "PDV(17%)"
+			<< std::setw(10)
+			<< "Kolicina"
+			<< std::setw(10)
+			<< "Ukupno"
+			<< endl;
+
+		while (std::getline(file, current))
+		{
+			auto t = returnBillFromReadString(current);
+			std::vector<std::string> vec;
+			Bill::split(current, '#', vec);
+			Bill::Date date = vec[0];
+			if (vec[1] == localBuyer)
+			{
+				cout << std::resetiosflags(std::ios::adjustfield);			// resetovanje 
+				cout << std::setiosflags(std::ios::left);					// poravnanje u lijevo
+				cout
+					<< std::setw(15)
+					<< vec[0]
+					<< std::setw(12)
+					<< vec[1]
+					<< std::setw(19)
+					<< vec[2]
+					<< std::setw(10)
+					<< vec[3] + admin::getCurrentCurrency()
+					<< std::setw(10)
+					<< (std::to_string((std::stod(vec[3]) * 0.17))).substr(0, 4) + admin::getCurrentCurrency()
+					<< std::setw(10)
+					<< vec[4]
+					<< std::setw(10)
+					<< vec[5] + admin::getCurrentCurrency()
+					<< endl;
+			}
+
+		}
+
+	}
+
 
 
 
@@ -209,14 +342,14 @@ int analiticar::Analiticar::menu()
 			case 2:
 			{
 				system("cls");
-				// pregled racuna po kupcu
+				this->billsBuyerOverview();
 				cout << "Pritisnite bilo sta da nastavite koristiti aplikaciju: "; getchar();
 				system("cls");
 			} break;
 			case 3:
 			{
 				system("cls");
-				//pregled racuna po proizvodu
+				this->billsProductOverview();
 				cout << "Pritisnite bilo sta da nastavite koristiti aplikaciju: "; getchar();
 				system("cls");
 			} break;
