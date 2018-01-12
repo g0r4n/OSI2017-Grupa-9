@@ -292,7 +292,7 @@ void admin::Administrator::editUser(std::fstream& fileWithUsers) const
 	if (exist != arr.end())
 	{
 		string choice;
-		int function;
+		string function;
 		do
 		{
 			cout
@@ -300,40 +300,43 @@ void admin::Administrator::editUser(std::fstream& fileWithUsers) const
 				<< '\t' << "2. Ime" << endl
 				<< '\t' << "3. Prezime" << endl
 				<< '\t' << "4. PIN" << endl
-				<< '\t' << "5. Korisnicu grupu" << endl
+				<< '\t' << "5. Korisnicku grupu" << endl
 				<< '\t' << "6. Sve" << endl;
+
 			do
 			{
 				cout << "Izaberite koju/e informaciju/e o korisniku zelite promjeniti(unesite broj, npr. 2 za ime) : ";
-				cin >> function;
-				cin.ignore();
-			} while (function < 1 || function > 6);
+				getline(cin, function);
+			} while (function.length() > 1 || (std::stoi(function) > 6 || std::stoi(function) < 1) );
 
 
-			switch (function)
+			switch (std::stoi(function))
 			{
 
 			case 1:
 			{
-				string username_temp;
-				cout << "Unesite novo korisnicko ime(username) za datog korisnika: ";
-				getline(cin, username_temp);
-				exist->setUserName(username_temp);
+				exist->setUserName(getUserName());
 				break;
 			}
 			case 2:
 			{
 				string name_temp;
-				cout << "Unesite novo ime za datog korisnika: ";
-				getline(cin, name_temp);
+				do
+				{
+					cout << "Unesite novo ime za datog korisnika: ";
+					getline(cin, name_temp);
+				} while (name_temp.length() < 1 || name_temp.at(0) == ' ');
 				exist->setName(name_temp);
 				break;
 			}
 			case 3:
 			{
 				string surename_temp;
-				cout << "Unesite novo prezime za datog korisnika: ";
-				getline(cin, surename_temp);
+				do
+				{
+					cout << "Unesite novo prezime za datog korisnika: ";
+					getline(cin, surename_temp);
+				} while (surename_temp.length() < 1 || surename_temp.at(0) == ' ');
 				exist->setSureName(surename_temp);
 				break;
 			}
@@ -353,6 +356,7 @@ void admin::Administrator::editUser(std::fstream& fileWithUsers) const
 			case 6:
 			{
 				*exist = createNewUser();
+				choice = "Q";	//ako je korisnik u potpunosit promjenjen, nema smisla opet raditi neku pojedinacnu promjenu na njemu
 				break;
 			}
 			default:
@@ -469,7 +473,7 @@ int admin::Administrator::menu() const
 			<< "7.Izlazak iz programa" << endl;
 
 		cout << "Izaberite jednu od ponudjenih opcija: ";	getline(cin, choice);
-		if (isdigit(choice[0]))
+		if (choice.length() == 1 && isdigit(choice[0]))
 		{
 			switch (std::stoi(choice))
 			{
