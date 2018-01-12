@@ -16,6 +16,8 @@ namespace analiticar
 		~Analiticar();
 
 		void billsDateOverview();
+		void billsProductOverview();
+		void billsBuyerOverview();
 		int menu();
 
 	};
