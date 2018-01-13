@@ -1,6 +1,6 @@
 #pragma once
 #include "Bill.h"
-
+#include "Administrator.h"
 int Bill::serialNumber = 0;
 
 Bill::Bill() : customer(""), date(1, 1, 1900)
@@ -522,6 +522,42 @@ std::string Bill::removeDoubleCharacters(std::string str, char c)
 	return res;
 }
 
+
+void Bill::writeBillToConsole()
+{
+	double sum = 0;
+	
+	cout << std::resetiosflags(std::ios::adjustfield); //FORMATIRATI SUGAVI ISPIS
+	cout << std::setiosflags(std::ios::left);
+	cout.fill(' ');
+	cout << std::setfill(' ') << std::setw(20)<< this->getDate() <<"    " << std::setfill(' ')
+		<< std::setw(20) << this->getCustomer()
+		<< std::setw(19) << this->getProductKey()[0].productKey
+		<< std::setw(10) << std::to_string(this->getProductKey()[0].price).substr(0, 4) + admin::getCurrentCurrency()
+		<< std::setw(10) << (std::to_string((this->getProductKey()[0].price) * PDV)).substr(0, 4) + admin::getCurrentCurrency()
+		<< std::setw(10) << this->getProductKey()[0].soldQuantity
+		<< std::setw(10) << std::to_string(this->getProductKey()[0].price*this->getProductKey()[0].soldQuantity).substr(0, 4) + admin::getCurrentCurrency()
+		<< std::setw(10) << std::to_string(this->getProductKey()[0].price*this->getProductKey()[0].soldQuantity+this->getProductKey()[0].price*this->getProductKey()[0].soldQuantity*PDV).substr(0, 4) + admin::getCurrentCurrency() <<endl;
+	sum += this->getProductKey()[0].price*this->getProductKey()[0].soldQuantity;
+	for (int i = 1;i < this->getProductKey().size();i++)
+	{
+		cout << std::setfill(' ') << std::setw(20) <<  "    " << std::setfill(' ') << std::setw(15) << " " 
+			<< std::setw(19) << this->getProductKey()[i].productKey
+			<< std::setw(10) << std::to_string(this->getProductKey()[i].price).substr(0, 4) + admin::getCurrentCurrency()
+			<< std::setw(10) << (std::to_string((this->getProductKey()[i].price) * PDV)).substr(0, 4) + admin::getCurrentCurrency()
+			<< std::setw(10) << this->getProductKey()[i].soldQuantity
+			<< std::setw(10) << std::to_string(this->getProductKey()[i].price*this->getProductKey()[i].soldQuantity).substr(0, 4) + admin::getCurrentCurrency()
+			<< std::setw(10) << std::to_string(this->getProductKey()[i].price*this->getProductKey()[i].soldQuantity + this->getProductKey()[i].price*this->getProductKey()[i].soldQuantity*PDV).substr(0, 4) + admin::getCurrentCurrency() << endl;
+		sum += this->getProductKey()[i].price*this->getProductKey()[i].soldQuantity;
+	}
+	
+	cout << std::setfill('-') << std::setw(112) << " ";
+	cout << std::setfill(' ') <<endl << std::setw(86)<<" " <<"Ukupno: " << sum << admin::getCurrentCurrency().substr(0,2) << endl;
+	cout << std::setfill(' ') << endl << std::setw(86) << " " << "PDV: " << sum*PDV << admin::getCurrentCurrency().substr(0, 2) << endl;
+	sum *= 1 + PDV;
+	cout << std::setfill(' ') << endl << std::setw(86) << " " << "Ukupno za placanje: " << sum << admin::getCurrentCurrency().substr(0, 2) << endl;
+}
+
 void Bill::split(const std::string & s, char c, std::vector<std::string>& v)
 {
 	std::string::size_type i = 0;
@@ -672,7 +708,7 @@ std::ostream& operator<<(std::ostream& str, const Bill& bill)
 {
 	for (auto& p : bill.products)
 	{
-		str << bill.date << "#" << bill.customer << "#" << p << "#" <<  Bill::serialNumber << std::endl;
+		str << bill.date << "#" << bill.customer << "#" << p << "#" <<  Bill::serialNumber << "#" << bill.products.size() <<std::endl;
 	}
 	return str;
 }

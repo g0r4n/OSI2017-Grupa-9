@@ -48,3 +48,4 @@ g0r4n 6462
 corke11 0123
 g0r4n 6462
 corke 1234
+char 1

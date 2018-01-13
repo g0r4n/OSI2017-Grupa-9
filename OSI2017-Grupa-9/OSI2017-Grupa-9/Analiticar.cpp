@@ -118,16 +118,16 @@ void analiticar::Analiticar::billsDateOverview()
 		return;
 	string current;
 
-	cout << std::resetiosflags(std::ios::adjustfield);			// resetovanje 
-	cout << std::setiosflags(std::ios::left);					// poravnanje u lijevo
-	cout 
-		<< std::setw(15) 
-		<< "Datum" 
-		<< std::setw(12) 
+	cout << std::resetiosflags(std::ios::adjustfield);			
+	cout << std::setiosflags(std::ios::left);					
+	cout
+		<< std::setw(15)
+		<< "Datum"
+		<< std::setw(20)
 		<< "Kupac"
-		<< std::setw(19) 
+		<< std::setw(19)
 		<< "Proizvod"
-		<< std::setw(10) 
+		<< std::setw(10)
 		<< "Cijena"
 		<< std::setw(10)
 		<< "PDV(17%)"
@@ -135,48 +135,33 @@ void analiticar::Analiticar::billsDateOverview()
 		<< "Kolicina"
 		<< std::setw(10)
 		<< "Ukupno"
-		<< endl;
+		<< std::setw(15)
+		<< "Ukupno sa PDV-om" << endl;
+	cout << std::setfill('-') << std::setw(112) << " " << endl;
 
 	while (std::getline(file, current))
 	{
-		auto t = returnBillFromReadString(current);
 		std::vector<std::string> vec;
 		Bill::split(current, '#', vec);
-		Bill::Date date = vec[0];
+		vec[0][11] = ' '; Bill::Date date = vec[0];
+		std::vector<Bill::Product> assistVector;
+		
+		Bill::Product temp  (vec[2], std::stod(vec[3]), std::stod(vec[4]), std::stod(vec[5]));
+		assistVector.push_back(temp);
+		for (int i = 1;i < stoi(vec[7]);i++)
+		{
+			vec.clear();
+			std::getline(file, current);
+			Bill::split(current, '#', vec);
+			Bill::Product temp(vec[2], std::stod(vec[3]), std::stod(vec[4]), std::stod(vec[5]));
+			assistVector.push_back(temp);
+		}
 		if (date > start && date < finish)
 		{
-			cout << std::resetiosflags(std::ios::adjustfield);			// resetovanje 
-			cout << std::setiosflags(std::ios::left);					// poravnanje u lijevo
-			cout
-				<< std::setw(15)
-				<< vec[0]
-				<< std::setw(12)
-				<< vec[1]
-				<< std::setw(19)
-				<< vec[2]
-				<< std::setw(10)
-				<< vec[3] + admin::getCurrentCurrency()
-				<< std::setw(10)
-				<< (std::to_string((std::stod(vec[3]) * 0.17))).substr(0,4) + admin::getCurrentCurrency()
-				/*
-					U prethodnoj liniji se desi sledece:
-						1. vec[3] koji je string(predstavlja informaciju o cijeni) se pretvara u double i mnozi se sa
-							0.17(pdv)
-						2. dati proizvod se pretvara u string pomocu funkcije std::to_string()
-						3. na kraju, iz tog finalnog stringa se pomocu funkcije substr izvlace samo 4 karaktera
-						4. novi string se spaja sa informacijom o koristenoj valuti
-
-
-						Vrsi se izvlacenje samo 4 karaktera da bi dobili ispis tipa: 1.78(4 karaktera) i onda
-						se spaja sa informacijom o valuti da se na kraju dobije ispis tipa: 1.78e
-				*/
-				<< std::setw(10)
-				<< vec[4]
-				<< std::setw(10)
-				<< vec[5] + admin::getCurrentCurrency()
-				<< endl;
+			Bill assist(vec[1], date, assistVector);
+			assist.writeBillToConsole();
 		}
-
+		
 	}
 
 	}
@@ -215,7 +200,7 @@ void analiticar::Analiticar::billsDateOverview()
 			<< std::setw(10)
 			<< "Ukupno"
 			<< endl;
-
+		cout << std::setfill('-') << std::setw(112) << " " <<endl;
 		while (std::getline(file, current))
 		{
 			auto t = returnBillFromReadString(current);
@@ -250,10 +235,7 @@ void analiticar::Analiticar::billsDateOverview()
 
 	void analiticar::Analiticar::billsBuyerOverview()
 	{
-		system("cls");
-		std::fstream file; file.open("Racuni za ispis.txt");
-		if (!file.is_open())
-			return;
+		
 		string current, localBuyer;
 		bool quit = 0;
 		while (!quit)
@@ -263,9 +245,13 @@ void analiticar::Analiticar::billsDateOverview()
 			if (localBuyer != " " && localBuyer!= "")
 				quit = 1;
 		}
-
-		cout << std::resetiosflags(std::ios::adjustfield);			
-		cout << std::setiosflags(std::ios::left);					
+		system("cls");
+		std::fstream file; file.open("Racuni za ispis.txt");
+		if (!file.is_open())
+			return;
+		cout << std::setfill('-') << std::setw(112) << " "<<endl;
+		cout << std::resetiosflags(std::ios::adjustfield);
+		cout << std::setiosflags(std::ios::left);
 		cout
 			<< std::setw(15)
 			<< "Datum"
@@ -291,8 +277,8 @@ void analiticar::Analiticar::billsDateOverview()
 			Bill::Date date = vec[0];
 			if (vec[1] == localBuyer)
 			{
-				cout << std::resetiosflags(std::ios::adjustfield);			// resetovanje 
-				cout << std::setiosflags(std::ios::left);					// poravnanje u lijevo
+				cout << std::resetiosflags(std::ios::adjustfield);
+				cout << std::setiosflags(std::ios::left);
 				cout
 					<< std::setw(15)
 					<< vec[0]
@@ -312,7 +298,6 @@ void analiticar::Analiticar::billsDateOverview()
 			}
 
 		}
-
 	}
 
 

@@ -40,6 +40,8 @@ public:
 	Bill(const Bill&);
 	Bill& operator=(const Bill&);
 	static void billClassification();
+	
+	void writeBillToConsole();
 	static void split(const std::string& s, char c, std::vector<std::string>& v);
 	Date getDate();
 	std::vector<Bill::Product> getProductKey();
@@ -61,4 +63,4 @@ private:
 	static void saveFileToObradjeniRacuni(std::string, std::ifstream&, Bill);
 	static void saveFileToRacuniSaGreskom(std::string, std::ifstream&);
 	static std::string removeDoubleCharacters(std::string, char);
-};
+ };
