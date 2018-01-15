@@ -181,13 +181,12 @@ void analiticar::Analiticar::billsDateOverview()
 			if (localProduct != " " && localProduct != "")
 				quit = 1;
 		}
-
-		cout << std::resetiosflags(std::ios::adjustfield);			
-		cout << std::setiosflags(std::ios::left);					
+		cout << std::resetiosflags(std::ios::adjustfield);
+		cout << std::setiosflags(std::ios::left);
 		cout
 			<< std::setw(15)
 			<< "Datum"
-			<< std::setw(12)
+			<< std::setw(20)
 			<< "Kupac"
 			<< std::setw(19)
 			<< "Proizvod"
@@ -199,37 +198,38 @@ void analiticar::Analiticar::billsDateOverview()
 			<< "Kolicina"
 			<< std::setw(10)
 			<< "Ukupno"
-			<< endl;
-		cout << std::setfill('-') << std::setw(112) << " " <<endl;
+			<< std::setw(15)
+			<< "Ukupno sa PDV-om" << endl;
+		cout << std::setfill('-') << std::setw(112) << " " << endl;
+
 		while (std::getline(file, current))
 		{
-			auto t = returnBillFromReadString(current);
 			std::vector<std::string> vec;
 			Bill::split(current, '#', vec);
-			Bill::Date date = vec[0];
-			if (vec[2]==localProduct)
+			vec[0][11] = ' '; Bill::Date date = vec[0];
+			std::vector<Bill::Product> assistVector;
+
+			Bill::Product temp(vec[2], std::stod(vec[3]), std::stod(vec[4]), std::stod(vec[5]));
+			assistVector.push_back(temp);
+			for (int i = 1;i < stoi(vec[7]);i++)
 			{
-				cout << std::resetiosflags(std::ios::adjustfield);			 
-				cout << std::setiosflags(std::ios::left);					
-				cout
-					<< std::setw(15)
-					<< vec[0]
-					<< std::setw(12)
-					<< vec[1]
-					<< std::setw(19)
-					<< vec[2]
-					<< std::setw(10)
-					<< vec[3] + admin::getCurrentCurrency()
-					<< std::setw(10)
-					<< (std::to_string((std::stod(vec[3]) * 0.17))).substr(0, 4) + admin::getCurrentCurrency()
-					<< std::setw(10)
-					<< vec[4]
-					<< std::setw(10)
-					<< vec[5] + admin::getCurrentCurrency()
-					<< endl;
+				vec.clear();
+				std::getline(file, current);
+				Bill::split(current, '#', vec);
+				Bill::Product temp(vec[2], std::stod(vec[3]), std::stod(vec[4]), std::stod(vec[5]));
+				assistVector.push_back(temp);
+			}
+			for(int i =0;i<assistVector.size();i++)
+				if (localProduct==assistVector[i].productKey)
+				
+			{
+				Bill assist(vec[1], date, assistVector);
+				assist.writeBillToConsole();
+				break;
 			}
 
 		}
+
 
 	}
 
@@ -249,13 +249,12 @@ void analiticar::Analiticar::billsDateOverview()
 		std::fstream file; file.open("Racuni za ispis.txt");
 		if (!file.is_open())
 			return;
-		cout << std::setfill('-') << std::setw(112) << " "<<endl;
 		cout << std::resetiosflags(std::ios::adjustfield);
 		cout << std::setiosflags(std::ios::left);
 		cout
 			<< std::setw(15)
 			<< "Datum"
-			<< std::setw(12)
+			<< std::setw(20)
 			<< "Kupac"
 			<< std::setw(19)
 			<< "Proizvod"
@@ -267,35 +266,34 @@ void analiticar::Analiticar::billsDateOverview()
 			<< "Kolicina"
 			<< std::setw(10)
 			<< "Ukupno"
-			<< endl;
+			<< std::setw(15)
+			<< "Ukupno sa PDV-om" << endl;
+		cout << std::setfill('-') << std::setw(112) << " " << endl;
 
 		while (std::getline(file, current))
 		{
-			auto t = returnBillFromReadString(current);
 			std::vector<std::string> vec;
 			Bill::split(current, '#', vec);
-			Bill::Date date = vec[0];
-			if (vec[1] == localBuyer)
+			vec[0][11] = ' '; Bill::Date date = vec[0];
+			std::vector<Bill::Product> assistVector;
+
+			Bill::Product temp(vec[2], std::stod(vec[3]), std::stod(vec[4]), std::stod(vec[5]));
+			assistVector.push_back(temp);
+			for (int i = 1;i < stoi(vec[7]);i++)
 			{
-				cout << std::resetiosflags(std::ios::adjustfield);
-				cout << std::setiosflags(std::ios::left);
-				cout
-					<< std::setw(15)
-					<< vec[0]
-					<< std::setw(12)
-					<< vec[1]
-					<< std::setw(19)
-					<< vec[2]
-					<< std::setw(10)
-					<< vec[3] + admin::getCurrentCurrency()
-					<< std::setw(10)
-					<< (std::to_string((std::stod(vec[3]) * 0.17))).substr(0, 4) + admin::getCurrentCurrency()
-					<< std::setw(10)
-					<< vec[4]
-					<< std::setw(10)
-					<< vec[5] + admin::getCurrentCurrency()
-					<< endl;
+				vec.clear();
+				std::getline(file, current);
+				Bill::split(current, '#', vec);
+				Bill::Product temp(vec[2], std::stod(vec[3]), std::stod(vec[4]), std::stod(vec[5]));
+				assistVector.push_back(temp);
 			}
+			if (localBuyer == vec[1])
+
+				{
+					Bill assist(vec[1], date, assistVector);
+					assist.writeBillToConsole();
+					
+				}
 
 		}
 	}
@@ -321,21 +319,21 @@ int analiticar::Analiticar::menu()
 			{
 				system("cls");
 				this->billsDateOverview();
-				cout << "Pritisnite bilo sta da nastavite koristiti aplikaciju: "; getchar();
+				cout << "Unesite bilo sta da nastavite koristiti aplikaciju: "; getchar();
 				system("cls");
 			} break;
 			case 2:
 			{
 				system("cls");
 				this->billsBuyerOverview();
-				cout << "Pritisnite bilo sta da nastavite koristiti aplikaciju: "; getchar();
+				cout << "Unesite bilo sta da nastavite koristiti aplikaciju: "; getchar();
 				system("cls");
 			} break;
 			case 3:
 			{
 				system("cls");
 				this->billsProductOverview();
-				cout << "Pritisnite bilo sta da nastavite koristiti aplikaciju: "; getchar();
+				cout << "Unesite bilo sta da nastavite koristiti aplikaciju: "; getchar();
 				system("cls");
 			} break;
 			case 4:

@@ -502,6 +502,7 @@ void Bill::saveFileToRacuniSaGreskom(std::string path, std::ifstream &file)
 	try
 	{
 		fs::copy_file(fs::path(path), pathToSave);
+		cout << "Doslo je do greske pri obradi racuna '" << renameBill << " '. Racun je sacuvan u folderu 'Racuni sa greskom'." << endl;
 	}
 	catch (const fs::v1::filesystem_error &e)
 	{
@@ -527,7 +528,7 @@ void Bill::writeBillToConsole()
 {
 	double sum = 0;
 	
-	cout << std::resetiosflags(std::ios::adjustfield); //FORMATIRATI SUGAVI ISPIS
+	cout << std::resetiosflags(std::ios::adjustfield); 
 	cout << std::setiosflags(std::ios::left);
 	cout.fill(' ');
 	cout << std::setfill(' ') << std::setw(20)<< this->getDate() <<"    " << std::setfill(' ')
@@ -555,7 +556,7 @@ void Bill::writeBillToConsole()
 	cout << std::setfill(' ') <<endl << std::setw(86)<<" " <<"Ukupno: " << sum << admin::getCurrentCurrency().substr(0,2) << endl;
 	cout << std::setfill(' ') << endl << std::setw(86) << " " << "PDV: " << sum*PDV << admin::getCurrentCurrency().substr(0, 2) << endl;
 	sum *= 1 + PDV;
-	cout << std::setfill(' ') << endl << std::setw(86) << " " << "Ukupno za placanje: " << sum << admin::getCurrentCurrency().substr(0, 2) << endl;
+	cout << std::setfill(' ') << endl << std::setw(86) << " " << "Ukupno za placanje: " << sum << admin::getCurrentCurrency().substr(0, 2) << endl << std::setfill('=') << std::setw(112) << " " <<endl << endl << endl <<endl;
 }
 
 void Bill::split(const std::string & s, char c, std::vector<std::string>& v)

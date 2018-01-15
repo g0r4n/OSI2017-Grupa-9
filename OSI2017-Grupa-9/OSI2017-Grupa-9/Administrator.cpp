@@ -226,7 +226,7 @@ void admin::Administrator::userOverview(std::fstream& fileWithUsers) const
 	for (int i = 0; i < 75; i++) cout << "=";
 	cout << endl;
 
-	cout
+	cout << std::setfill(' ')
 		<< std::setw(16)
 		<< "Korisnicko ime"
 		<< " "
@@ -379,7 +379,7 @@ void admin::Administrator::editUser(std::fstream& fileWithUsers) const
 				<< endl
 				<< "Ako zelite prekinuti koristenje ove funkcije, unesite Q." 
 				<< endl
-				<< "Ako zelite nastaviti, pritisnite bilo sta...";
+				<< "Ako zelite nastaviti, Unesite bilo sta...";
 
 			getline(cin, choice);
 
@@ -413,8 +413,8 @@ void admin::Administrator::deleteUser(std::fstream& fileWithUsers) const
 		cout
 			<< "Administrator ne moze ukloniti samog sebe sa sistema. "
 			<< endl
-			<< "Za izlaz iz aplikacije pritisnite bilo sta." << endl;
-		cout << "Pritisnite bilo sta za prekid rada programa";
+			<< "Za izlaz iz aplikacije Unesite bilo sta." << endl;
+		cout << "Unesite bilo sta za prekid rada programa";
 		getchar();
 
 	}
@@ -500,7 +500,7 @@ int admin::Administrator::menu() const
 			<< "3.Promjena informacija o postojecem korisniku" << endl
 			<< "4.Brisanje postojeceg korisnika" << endl 
 			<< "5.Promjena valute" << endl 
-			<< "6.Pregled neuspjensih prijava na sistem" << endl
+			<< "6.Pregled neuspjesnih prijava na sistem" << endl
 			<< "7.Odjava korisnika" << endl 
 			<< "8.Izlazak iz programa" << endl;
 
@@ -515,7 +515,7 @@ int admin::Administrator::menu() const
 				std::fstream file; file.open("test.txt");
 				this->userOverview(file);
 				file.close();
-				cout << "Pritisnite bilo sta da nastavite koristiti aplikaciju..."; getchar();
+				cout << "Unesite bilo sta da nastavite koristiti aplikaciju..."; getchar();
 				system("cls");
 			} break;
 			case 2:
@@ -524,7 +524,7 @@ int admin::Administrator::menu() const
 				std::fstream file; file.open("test.txt");
 				this->addNewUser(file);
 				file.close();
-				cout << "Pritisnite bilo sta da nastavite koristiti aplikaciju: "; getchar();
+				cout << "Unesite bilo sta da nastavite koristiti aplikaciju: "; getchar();
 				system("cls");
 			} break;
 			case 3:
@@ -533,7 +533,7 @@ int admin::Administrator::menu() const
 				std::fstream file; file.open("test.txt");
 				this->editUser(file);
 				file.close();
-				cout << "Pritisnite bilo sta da nastavite koristiti aplikaciju: "; getchar();
+				cout << "Unesite bilo sta da nastavite koristiti aplikaciju: "; getchar();
 				system("cls");
 			} break;
 			case 4:
@@ -542,7 +542,7 @@ int admin::Administrator::menu() const
 				std::fstream file; file.open("test.txt");
 				this->deleteUser(file);
 				file.close();
-				cout << "Pritisnite bilo sta da nastavite koristiti aplikaciju: "; getchar();
+				cout << "Unesite bilo sta da nastavite koristiti aplikaciju: "; getchar();
 				system("cls");
 			} break;
 			case 5:
@@ -551,14 +551,14 @@ int admin::Administrator::menu() const
 				std::fstream file; file.open(CurrenciesFile);
 				this->changeCurrency(file);
 				file.close();
-				cout << "Pritisnite bilo sta da nastavite koristiti aplikaciju: "; getchar();
+				cout << "Unesite bilo sta da nastavite koristiti aplikaciju: "; getchar();
 				system("cls");
 			} break;
 			case 6:
 			{
 				system("cls");
 				this->checkFailedLogins();
-				cout << "Pritisnite bilo sta da nastavite koristiti aplikaciju: "; getchar();
+				cout << "Unesite bilo sta da nastavite koristiti aplikaciju: "; getchar();
 				system("cls");
 			} break;
 			case 7:

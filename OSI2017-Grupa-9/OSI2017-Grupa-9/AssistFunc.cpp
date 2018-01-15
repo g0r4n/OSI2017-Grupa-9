@@ -59,9 +59,8 @@ std::tuple<string, string, string, string, bool> logIn()
 			cout
 				<< "Neuspjesno logovanje na sistem."
 				<< endl
-				<< "Pritisnite enter za ponovno unosenje podataka o korisniku, ili Esc za izlazak iz programa.";
-			//rjesiti Esc
-
+				<< "Unesite enter za ponovno unosenje podataka o korisniku";
+		
 			writeInvalidLogin(locUserName, locPw);
 
 			getchar();
