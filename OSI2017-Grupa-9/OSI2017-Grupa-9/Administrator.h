@@ -36,7 +36,7 @@ namespace admin
 		void editUser(std::fstream&) const;
 		void deleteUser(std::fstream&) const;
  		void changeCurrency(std::fstream&) const;		
-		bool isLogInSuccesfull() const;
+		void checkFailedLogins() const;
 		int menu() const;
 		
 	};

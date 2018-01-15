@@ -49,3 +49,4 @@ corke11 0123
 g0r4n 6462
 corke 1234
 char 1
+goci 6462

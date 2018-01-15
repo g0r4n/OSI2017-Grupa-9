@@ -276,8 +276,12 @@ void admin::Administrator::addNewUser(std::fstream& fileWithUsers) const
 void admin::Administrator::editUser(std::fstream& fileWithUsers) const
 {
 	string username_temp;
-	cout << "Unesite korisnicko ime(username) korisnika kom zelite promjeniti informacije: ";
-	getline(cin, username_temp);
+	do
+	{
+		cout << "Unesite korisnicko ime(username) korisnika kom zelite promjeniti informacije: ";
+		getline(cin, username_temp);
+	} while (username_temp.length() < 1 || username_temp.at(0) == ' ');
+
 	std::vector<User> arr;
 	for (User pom; fileWithUsers >> pom; arr.push_back(pom));
 	User toEdit({ username_temp, "","","",false });
@@ -295,18 +299,21 @@ void admin::Administrator::editUser(std::fstream& fileWithUsers) const
 		string function;
 		do
 		{
+
 			cout
+				<< endl << endl
 				<< '\t' << "1. Korisnicko ime(username)" << endl
 				<< '\t' << "2. Ime" << endl
 				<< '\t' << "3. Prezime" << endl
 				<< '\t' << "4. PIN" << endl
 				<< '\t' << "5. Korisnicku grupu" << endl
-				<< '\t' << "6. Sve" << endl;
+				<< '\t' << "6. Sve" << endl << endl << endl;
 
 			do
 			{
-				cout << "Izaberite koju/e informaciju/e o korisniku zelite promjeniti(unesite broj, npr. 2 za ime) : ";
+				cout << "Izaberite koju/e informaciju/e o korisniku zelite promjeniti(unesite broj, npr. 2 za ime): " ;
 				getline(cin, function);
+				cout << endl;
 			} while (function.length() > 1 || (std::stoi(function) > 6 || std::stoi(function) < 1) );
 
 
@@ -342,7 +349,7 @@ void admin::Administrator::editUser(std::fstream& fileWithUsers) const
 			}
 			case 4:
 			{
-				cout << "Unesite novi ";	// funkcija getPIN ce ispisati PIN: 
+				cout << "Unesite novi ";	// funkcija getPIN ce ispisati: "PIN: " 
 				exist->setPIN(getPIN());
 				break;
 			}
@@ -367,9 +374,15 @@ void admin::Administrator::editUser(std::fstream& fileWithUsers) const
 
 			}
 
-			cout << "Ako zelite prekinuti koristenje ove funkcije, unesite Q."
+			cout 
+				<< endl
+				<< endl
+				<< "Ako zelite prekinuti koristenje ove funkcije, unesite Q." 
+				<< endl
 				<< "Ako zelite nastaviti, pritisnite bilo sta...";
+
 			getline(cin, choice);
+
 		} while (choice != "Q");
 
 		fileWithUsers.close();
@@ -456,6 +469,24 @@ void admin::Administrator::changeCurrency(std::fstream& fileWithCurrencies) cons
 	}
 }
 
+void admin::Administrator::checkFailedLogins() const
+{
+	std::fstream fileWithFailedLogins(LogFile, std::ios::in);
+	string line;
+	
+	cout << "Spisak neuspjesnih prijava na sistem: " << endl;
+	cout << std::resetiosflags(std::ios::adjustfield);			// resetovanje 
+	cout << std::setiosflags(std::ios::left);					// poravnanje u lijevo
+
+	cout << std::setfill('=') << std::setw(112) << " " << endl;
+
+	while (getline(fileWithFailedLogins, line))
+		cout << line << endl;
+
+	cout << std::setfill('=') << std::setw(112) << " " << endl;
+
+}
+
 int admin::Administrator::menu() const
 {
 	bool quit = 0;
@@ -469,8 +500,9 @@ int admin::Administrator::menu() const
 			<< "3.Promjena informacija o postojecem korisniku" << endl
 			<< "4.Brisanje postojeceg korisnika" << endl 
 			<< "5.Promjena valute" << endl 
-			<< "6.Odjava korisnika" << endl 
-			<< "7.Izlazak iz programa" << endl;
+			<< "6.Pregled neuspjensih prijava na sistem" << endl
+			<< "7.Odjava korisnika" << endl 
+			<< "8.Izlazak iz programa" << endl;
 
 		cout << "Izaberite jednu od ponudjenih opcija: ";	getline(cin, choice);
 		if (choice.length() == 1 && isdigit(choice[0]))
@@ -523,10 +555,17 @@ int admin::Administrator::menu() const
 				system("cls");
 			} break;
 			case 6:
+			{
+				system("cls");
+				this->checkFailedLogins();
+				cout << "Pritisnite bilo sta da nastavite koristiti aplikaciju: "; getchar();
+				system("cls");
+			} break;
+			case 7:
 			{   system("cls");
 			return 0;
 			}
-			case 7:
+			case 8:
 				return 1;
 			default:
 			{

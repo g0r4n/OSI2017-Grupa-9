@@ -1,4 +1,5 @@
 corke11          Bojan            Coric            0123  1
 bane             Branislav        Kljaic           4545  0
-goci             Goran            Marinkovic       6462  1
+g0r4n            Goran            Marinkovic       6462  1
+ironmaiden       Iron             Maiden           7777  0
 dzona            Nikola           Tramosljika      4466  0
