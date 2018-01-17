@@ -478,12 +478,13 @@ void admin::Administrator::checkFailedLogins() const
 	cout << std::resetiosflags(std::ios::adjustfield);			// resetovanje 
 	cout << std::setiosflags(std::ios::left);					// poravnanje u lijevo
 
-	cout << std::setfill('=') << std::setw(112) << " " << endl;
+	cout << std::setfill('-') << std::setw(112) << " " << endl;
 
 	while (getline(fileWithFailedLogins, line))
 		cout << line << endl;
 
-	cout << std::setfill('=') << std::setw(112) << " " << endl;
+	cout << std::setfill('-') << std::setw(112) << " " << endl;
+	cout << std::setfill(' ');
 
 }
 
