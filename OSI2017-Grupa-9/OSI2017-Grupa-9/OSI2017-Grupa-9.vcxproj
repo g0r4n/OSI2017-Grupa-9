@@ -118,6 +118,7 @@
     <ClInclude Include="Bill.h" />
     <ClInclude Include="IPrintable.h" />
     <ClInclude Include="IReadable.h" />
+    <ClInclude Include="resource1.h" />
     <ClInclude Include="User.h" />
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +130,12 @@
     <ClCompile Include="IReadable.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="User.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="OSI2017-Grupa-9.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\..\Downloads\el.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

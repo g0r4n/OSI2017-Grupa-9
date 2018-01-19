@@ -19,10 +19,10 @@
 #include <cctype>
 #include <cstdlib>
 
-#define UserDataFile "UserDataFile.txt" //po sklapanju programa, direktorijume fajlova regulisati
-#define LogFile "InvalidLog.txt"
-#define ConfigFile "ConfigFile.txt"
-#define CurrenciesFile "Currencies.txt" //spojiti currencies i config, nema potrebe za dva fajla sa po jednom linijom
+#define UserDataFile "Program Files//UserDataFile.txt" //po sklapanju programa, direktorijume fajlova regulisati
+#define LogFile "Program Files//InvalidLog.txt"
+#define ConfigFile "Program Files//ConfigFile.txt"
+#define CurrenciesFile "Program Files//Currencies.txt" //spojiti currencies i config, nema potrebe za dva fajla sa po jednom linijom
 #define PDV 0.17
 
 using std::string;
