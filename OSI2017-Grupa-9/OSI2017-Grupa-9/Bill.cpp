@@ -537,7 +537,7 @@ void Bill::writeBillToConsole()
 		<< std::setw(10) << std::to_string(this->getProductKey()[0].price).substr(0, 4) + admin::getCurrentCurrency()
 		<< std::setw(10) << (std::to_string((this->getProductKey()[0].price) * PDV)).substr(0, 4) + admin::getCurrentCurrency()
 		<< std::setw(10) << this->getProductKey()[0].soldQuantity
-		<< std::setw(10) << std::to_string(this->getProductKey()[0].price*this->getProductKey()[0].soldQuantity).substr(0, 4) + admin::getCurrentCurrency() //potencijalna greska(kod ispisa) gdje ne ispise decimalni dio izraza
+		<< std::setw(10) << std::to_string(this->getProductKey()[0].price*this->getProductKey()[0].soldQuantity).substr(0, 4) + admin::getCurrentCurrency() //potencijalna greska(kod ispisa) gdje ne ispise decimalni dio izraza, fixovati
 		<< std::setw(10) << std::to_string(this->getProductKey()[0].price*this->getProductKey()[0].soldQuantity+this->getProductKey()[0].price*this->getProductKey()[0].soldQuantity*PDV).substr(0, 4) + admin::getCurrentCurrency() <<endl;
 	sum += this->getProductKey()[0].price*this->getProductKey()[0].soldQuantity;
 	for (int i = 1;i < this->getProductKey().size();i++)

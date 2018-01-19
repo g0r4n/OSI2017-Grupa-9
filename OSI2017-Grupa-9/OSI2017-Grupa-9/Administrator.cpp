@@ -510,7 +510,7 @@ int admin::Administrator::menu() const
 				std::fstream file; file.open(UserDataFile);
 				this->userOverview(file);
 				file.close();
-				cout << "Unesite bilo sta da nastavite koristiti aplikaciju..."; getchar();
+				cout << "Pritisnite enter da bi nastavili koristiti aplikaciju.."; getchar();
 				system("cls");
 			} break;
 			case 2:
@@ -519,7 +519,7 @@ int admin::Administrator::menu() const
 				std::fstream file; file.open(UserDataFile);
 				this->addNewUser(file);
 				file.close();
-				cout << "Unesite bilo sta da nastavite koristiti aplikaciju: "; getchar();
+				cout << "Pritisnite enter da bi nastavili koristiti aplikaciju.."; getchar();
 				system("cls");
 			} break;
 			case 3:
@@ -528,7 +528,7 @@ int admin::Administrator::menu() const
 				std::fstream file; file.open(UserDataFile);
 				this->editUser(file);
 				file.close();
-				cout << "Unesite bilo sta da nastavite koristiti aplikaciju: "; getchar();
+				cout << "Pritisnite enter da bi nastavili koristiti aplikaciju.."; getchar();
 				system("cls");
 			} break;
 			case 4:
@@ -537,7 +537,7 @@ int admin::Administrator::menu() const
 				std::fstream file; file.open(UserDataFile);
 				this->deleteUser(file);
 				file.close();
-				cout << "Unesite bilo sta da nastavite koristiti aplikaciju: "; getchar();
+				cout << "Pritisnite enter da bi nastavili koristiti aplikaciju.."; getchar();
 				system("cls");
 			} break;
 			case 5:
@@ -546,14 +546,14 @@ int admin::Administrator::menu() const
 				std::fstream file; file.open(CurrenciesFile);
 				this->changeCurrency(file);
 				file.close();
-				cout << "Unesite bilo sta da nastavite koristiti aplikaciju: "; getchar();
+				cout << "Pritisnite enter da bi nastavili koristiti aplikaciju.."; getchar();
 				system("cls");
 			} break;
 			case 6:
 			{
 				system("cls");
 				this->checkFailedLogins();
-				cout << "Unesite bilo sta da nastavite koristiti aplikaciju: "; getchar();
+				cout << "Pritisnite enter da bi nastavili koristiti aplikaciju.."; getchar();
 				system("cls");
 			} break;
 			case 7:

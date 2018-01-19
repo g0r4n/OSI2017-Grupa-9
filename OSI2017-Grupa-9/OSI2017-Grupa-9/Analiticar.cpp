@@ -318,21 +318,21 @@ int analiticar::Analiticar::menu()
 			{
 				system("cls");
 				this->billsDateOverview();
-				cout << "Unesite bilo sta da nastavite koristiti aplikaciju: "; getchar();
+				cout << "Pritisnite enter da bi nastavili koristiti aplikaciju.."; getchar();
 				system("cls");
 			} break;
 			case 2:
 			{
 				system("cls");
 				this->billsBuyerOverview();
-				cout << "Unesite bilo sta da nastavite koristiti aplikaciju: "; getchar();
+				cout << "Pritisnite enter da bi nastavili koristiti aplikaciju.."; getchar();
 				system("cls");
 			} break;
 			case 3:
 			{
 				system("cls");
 				this->billsProductOverview();
-				cout << "Unesite bilo sta da nastavite koristiti aplikaciju: "; getchar();
+				cout << "Pritisnite enter da bi nastavili koristiti aplikaciju.."; getchar();
 				system("cls");
 			} break;
 			case 4:
