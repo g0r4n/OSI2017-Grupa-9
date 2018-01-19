@@ -38,7 +38,7 @@ std::tuple<string, string, string, string, bool> logInCheck(std::fstream& file, 
 
 std::tuple<string, string, string, string, bool> logIn()
 {
-	std::fstream file("test.txt");
+	std::fstream file(UserDataFile);
 	bool quit = false;
 	string locUserName, locPw;
 	std::tuple<string, string, string, string, bool> type;

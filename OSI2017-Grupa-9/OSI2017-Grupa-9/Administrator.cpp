@@ -1,5 +1,4 @@
 #include "Administrator.h"
-#include <locale>
 using namespace admin;
 using namespace user;
 
@@ -29,7 +28,7 @@ User admin::Administrator::createNewUser() const
 int admin::Administrator::getNumberOfUsers(std::fstream& fileWithUsers) const
 {
 	if (!fileWithUsers.is_open())
-		fileWithUsers.open("test.txt", std::ios::in);
+		fileWithUsers.open(UserDataFile, std::ios::in);
 	string line;
 	int numberOfLines = 0;
 	while (getline(fileWithUsers, line))
@@ -81,7 +80,7 @@ string admin::Administrator::getPIN() const
 bool admin::Administrator::isUserNameOkay(const string username, std::fstream& fileWithUsers) const 
 {
 	if (!fileWithUsers.is_open())
-		fileWithUsers.open("test.txt", std::ios::out | std::ios::in);
+		fileWithUsers.open(UserDataFile, std::ios::out | std::ios::in);
 	fileWithUsers.clear();
 	fileWithUsers.seekg(0);
 	user::User u;
@@ -97,7 +96,7 @@ bool admin::Administrator::isUserNameOkay(const string username, std::fstream& f
 
 string admin::Administrator::getUserName() const
 {
-	std::fstream fileWithUsers("test.txt", std::ios::out | std::ios::in);
+	std::fstream fileWithUsers(UserDataFile, std::ios::out | std::ios::in);
 	string username;
 
 	do
@@ -136,11 +135,11 @@ bool admin::Administrator::isUserGroupOkay(const string userGroup) const
 bool admin::Administrator::getUserGroup() const
 {
 	string ug_temp; bool userGroup;
-	cout << "Korisnica grupa(0- Analiticar ,1- Administrator): "; getline(cin, ug_temp);
+	cout << "Korisnicka grupa(0 - Analiticar, 1 - Administrator): "; getline(cin, ug_temp);
 	while (!isUserGroupOkay(ug_temp))
 	{
 		cout << "Pogresan unos! Pokusajte ponovo" << endl;
-		cout << "Korisnica grupa(0- Analiticar ,1- Administrator): "; getline(cin, ug_temp);
+		cout << "Korisnicka grupa(0 - Analiticar, 1 - Administrator): "; getline(cin, ug_temp);
 	}
 	userGroup = static_cast<bool>(std::stoi(ug_temp));
 	return userGroup;
@@ -212,7 +211,7 @@ admin::Administrator::~Administrator(){}
 void admin::Administrator::userOverview(std::fstream& fileWithUsers) const
 {
 	if (!fileWithUsers.is_open())
-		fileWithUsers.open("test.txt", std::ios::in);
+		fileWithUsers.open(UserDataFile, std::ios::in);
 	if (static_cast<int>(fileWithUsers.tellg()) != 0)
 		fileWithUsers.seekg(0);
 	user::User u;
@@ -254,7 +253,7 @@ void admin::Administrator::userOverview(std::fstream& fileWithUsers) const
 void admin::Administrator::addNewUser(std::fstream& fileWithUsers) const
 {
 	if (!fileWithUsers.is_open())
-		fileWithUsers.open("test.txt", std::ios::out | std::ios::in);
+		fileWithUsers.open(UserDataFile, std::ios::out | std::ios::in);
 	fileWithUsers.clear();
 	fileWithUsers.seekg(0);												// pozicionira indikator unutar fajla na pocetak tog fajla
 
@@ -266,7 +265,7 @@ void admin::Administrator::addNewUser(std::fstream& fileWithUsers) const
 	std::sort(arr.begin(), arr.end());
 
 	fileWithUsers.close();
-	fileWithUsers.open("test.txt", std::ios::out | std::ios::trunc);	//brise sve iz datoteke i onda upisuje sortirane u tu istu
+	fileWithUsers.open(UserDataFile, std::ios::out | std::ios::trunc);	//brise sve iz datoteke i onda upisuje sortirane u tu istu
 	for (User &u : arr)
 		fileWithUsers << u << endl;
 	fileWithUsers.close();
@@ -278,7 +277,7 @@ void admin::Administrator::editUser(std::fstream& fileWithUsers) const
 	string username_temp;
 	do
 	{
-		cout << "Unesite korisnicko ime(username) korisnika kom zelite promjeniti informacije: ";
+		cout << "Unesite korisnicko ime(username) korisnika kom zelite promijeniti informacije: ";
 		getline(cin, username_temp);
 	} while (username_temp.length() < 1 || username_temp.at(0) == ' ');
 
@@ -311,7 +310,7 @@ void admin::Administrator::editUser(std::fstream& fileWithUsers) const
 
 			do
 			{
-				cout << "Izaberite koju/e informaciju/e o korisniku zelite promjeniti(unesite broj, npr. 2 za ime): " ;
+				cout << "Izaberite koju/e informaciju/e o korisniku zelite promijeniti(unesite broj, npr. 2 za ime): " ;
 				getline(cin, function);
 				cout << endl;
 			} while (function.length() > 1 || (std::stoi(function) > 6 || std::stoi(function) < 1) );
@@ -363,7 +362,7 @@ void admin::Administrator::editUser(std::fstream& fileWithUsers) const
 			case 6:
 			{
 				*exist = createNewUser();
-				choice = "Q";	//ako je korisnik u potpunosit promjenjen, nema smisla opet raditi neku pojedinacnu promjenu na njemu
+				choice = "Q";	//ako je korisnik u potpunosti promijenjen, nema smisla opet raditi neku pojedinacnu promjenu na njemu
 				break;
 			}
 			default:
@@ -386,7 +385,7 @@ void admin::Administrator::editUser(std::fstream& fileWithUsers) const
 		} while (choice != "Q");
 
 		fileWithUsers.close();
-		fileWithUsers.open("test.txt", std::ios::out | std::ios::trunc);	//brise sve iz datoteke i onda upisuje sortirane u tu istu
+		fileWithUsers.open(UserDataFile, std::ios::out | std::ios::trunc);	//brise sve iz datoteke i onda upisuje sortirane u tu istu
 		for (User &x : arr)
 			fileWithUsers << x << endl;
 		fileWithUsers.close();
@@ -399,7 +398,7 @@ void admin::Administrator::editUser(std::fstream& fileWithUsers) const
 void admin::Administrator::deleteUser(std::fstream& fileWithUsers) const
 {
 	if (!fileWithUsers.is_open())
-		fileWithUsers.open("test.txt", std::ios::out | std::ios::in);
+		fileWithUsers.open(UserDataFile, std::ios::out | std::ios::in);
 	fileWithUsers.clear();
 	fileWithUsers.seekg(0);								//rewind
 
@@ -411,12 +410,7 @@ void admin::Administrator::deleteUser(std::fstream& fileWithUsers) const
 	if (toErase == *this)
 	{
 		cout
-			<< "Administrator ne moze ukloniti samog sebe sa sistema. "
-			<< endl
-			<< "Za izlaz iz aplikacije Unesite bilo sta." << endl;
-		cout << "Unesite bilo sta za prekid rada programa";
-		getchar();
-
+			<< "Administrator ne moze ukloniti samog sebe sa sistema." << endl;
 	}
 
 	else
@@ -443,7 +437,7 @@ void admin::Administrator::deleteUser(std::fstream& fileWithUsers) const
 			cout << "Korisnik kojeg ste unijeli na postoji!" << endl;
 
 
-		fileWithUsers.open("test.txt", std::ios::out | std::ios::trunc);	//brise sve iz datoteke i onda upisuje sortirane u tu istu
+		fileWithUsers.open(UserDataFile, std::ios::out | std::ios::trunc);	//brise sve iz datoteke i onda upisuje sortirane u tu istu
 		for (User& u : arr)
 			fileWithUsers << u << endl;
 	}
@@ -464,7 +458,7 @@ void admin::Administrator::changeCurrency(std::fstream& fileWithCurrencies) cons
 		}
 		fileWithCurrencies.close();
 		fileWithCurrencies.open(CurrenciesFile, std::ios::out | std::ios::trunc);	//otvori file i obrise sve iz njega
-		cout << "Valuta uspjesno promjenjena u: " << currency << endl;
+		cout << "Valuta uspjesno promijenjena u: " << currency << endl;
 		fileWithCurrencies << currency;
 	}
 }
@@ -478,12 +472,12 @@ void admin::Administrator::checkFailedLogins() const
 	cout << std::resetiosflags(std::ios::adjustfield);			// resetovanje 
 	cout << std::setiosflags(std::ios::left);					// poravnanje u lijevo
 
-	cout << std::setfill('-') << std::setw(112) << " " << endl;
+	cout << std::setfill(' ') << std::setw(112) << " " << endl;
 
 	while (getline(fileWithFailedLogins, line))
 		cout << line << endl;
 
-	cout << std::setfill('-') << std::setw(112) << " " << endl;
+	cout << std::setfill(' ') << std::setw(112) << " " << endl;
 	cout << std::setfill(' ');
 
 }
@@ -513,7 +507,7 @@ int admin::Administrator::menu() const
 			case 1:
 			{
 				system("cls");
-				std::fstream file; file.open("test.txt");
+				std::fstream file; file.open(UserDataFile);
 				this->userOverview(file);
 				file.close();
 				cout << "Unesite bilo sta da nastavite koristiti aplikaciju..."; getchar();
@@ -522,7 +516,7 @@ int admin::Administrator::menu() const
 			case 2:
 			{
 				system("cls");
-				std::fstream file; file.open("test.txt");
+				std::fstream file; file.open(UserDataFile);
 				this->addNewUser(file);
 				file.close();
 				cout << "Unesite bilo sta da nastavite koristiti aplikaciju: "; getchar();
@@ -531,7 +525,7 @@ int admin::Administrator::menu() const
 			case 3:
 			{
 				system("cls");
-				std::fstream file; file.open("test.txt");
+				std::fstream file; file.open(UserDataFile);
 				this->editUser(file);
 				file.close();
 				cout << "Unesite bilo sta da nastavite koristiti aplikaciju: "; getchar();
@@ -540,7 +534,7 @@ int admin::Administrator::menu() const
 			case 4:
 			{
 				system("cls");
-				std::fstream file; file.open("test.txt");
+				std::fstream file; file.open(UserDataFile);
 				this->deleteUser(file);
 				file.close();
 				cout << "Unesite bilo sta da nastavite koristiti aplikaciju: "; getchar();

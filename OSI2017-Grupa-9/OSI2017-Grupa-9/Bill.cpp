@@ -537,7 +537,7 @@ void Bill::writeBillToConsole()
 		<< std::setw(10) << std::to_string(this->getProductKey()[0].price).substr(0, 4) + admin::getCurrentCurrency()
 		<< std::setw(10) << (std::to_string((this->getProductKey()[0].price) * PDV)).substr(0, 4) + admin::getCurrentCurrency()
 		<< std::setw(10) << this->getProductKey()[0].soldQuantity
-		<< std::setw(10) << std::to_string(this->getProductKey()[0].price*this->getProductKey()[0].soldQuantity).substr(0, 4) + admin::getCurrentCurrency()
+		<< std::setw(10) << std::to_string(this->getProductKey()[0].price*this->getProductKey()[0].soldQuantity).substr(0, 4) + admin::getCurrentCurrency() //potencijalna greska(kod ispisa) gdje ne ispise decimalni dio izraza
 		<< std::setw(10) << std::to_string(this->getProductKey()[0].price*this->getProductKey()[0].soldQuantity+this->getProductKey()[0].price*this->getProductKey()[0].soldQuantity*PDV).substr(0, 4) + admin::getCurrentCurrency() <<endl;
 	sum += this->getProductKey()[0].price*this->getProductKey()[0].soldQuantity;
 	for (int i = 1;i < this->getProductKey().size();i++)
@@ -552,7 +552,7 @@ void Bill::writeBillToConsole()
 		sum += this->getProductKey()[i].price*this->getProductKey()[i].soldQuantity;
 	}
 	
-	cout << std::setfill('-') << std::setw(112) << " ";
+	cout << std::setfill(' ') << std::setw(112) << " ";
 	cout << std::setfill(' ') <<endl << std::setw(86)<<" " <<"Ukupno: " << sum << admin::getCurrentCurrency().substr(0,2) << endl;
 	cout << std::setfill(' ') << endl << std::setw(86) << " " << "PDV: " << sum*PDV << admin::getCurrentCurrency().substr(0, 2) << endl;
 	sum *= 1 + PDV;
@@ -598,7 +598,7 @@ void Bill::billClassification()
 	std::string temp;
 	std::vector<std::string> strings;
 
-	std::ifstream configFile("ConfigFile.txt");
+	std::ifstream configFile(ConfigFile);
 	std::getline(configFile, temp);
 	split(temp, '=', strings);
 	configFile.seekg(0, configFile.beg);
@@ -701,8 +701,8 @@ void Bill::billClassification()
 	configFile.close();
 	outputFile.close();
 
-	std::remove("ConfigFile.txt");
-	std::rename("OtherFile.txt", "ConfigFile.txt");
+	std::remove(ConfigFile);
+	std::rename("OtherFile.txt", ConfigFile);
 }
 
 std::ostream& operator<<(std::ostream& str, const Bill& bill)

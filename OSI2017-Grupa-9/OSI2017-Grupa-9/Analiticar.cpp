@@ -1,7 +1,6 @@
 #include "Analiticar.h"
 #include "Bill.h"
 #include <string.h>
-#include<iomanip>
 #include "Administrator.h"
 
 
@@ -23,7 +22,7 @@ Bill::Date returnDateFromReadString(string input)
 
 
 
-Bill returnBillFromReadString(string input)
+Bill returnBillFromReadString(string input) //rijeseno na bolji nacin, deprecated
 {
 	string customer, productS, ammountStr, priceStr;	//string->bill converter dd/mm/gggg.#buyer#product 123#ammount#price#total
 	int buy = 12, prod, amm, pri;
@@ -65,7 +64,7 @@ void analiticar::Analiticar::billsDateOverview()
 		{
 			help.clear();
 			Bill::split(temp, '/', help);
-			if (isdigit(help[0][0]) && isdigit(help[0][1]) && isdigit(help[1][0]) && isdigit(help[1][1]) && isdigit(help[2][0]) && isdigit(help[2][1]) && isdigit(help[2][2]) && isdigit(help[2][3]) && isDateValid(std::stoi(help[1]), std::stoi(help[0]), std::stoi(help[2])))
+			if (isdigit(help[0][0]) && isdigit(help[0][1]) && isdigit(help[1][0]) && isdigit(help[1][1]) && isdigit(help[2][0]) && isdigit(help[2][1]) && isdigit(help[2][2]) && isdigit(help[2][3]) && isDateValid(std::stoi(help[1]), std::stoi(help[0]), std::stoi(help[2]))) //provjera jesu svi clanovi digiti
 			{
 				
 				quit = 1;
@@ -143,7 +142,7 @@ void analiticar::Analiticar::billsDateOverview()
 	{
 		std::vector<std::string> vec;
 		Bill::split(current, '#', vec);
-		vec[0][11] = ' '; Bill::Date date = vec[0];
+		Bill::Date date = vec[0];
 		std::vector<Bill::Product> assistVector;
 		
 		Bill::Product temp  (vec[2], std::stod(vec[3]), std::stod(vec[4]), std::stod(vec[5]));
@@ -183,7 +182,7 @@ void analiticar::Analiticar::billsDateOverview()
 		}
 		cout << std::resetiosflags(std::ios::adjustfield);
 		cout << std::setiosflags(std::ios::left);
-		cout
+		cout																	//poubacivati ove headere u funkciju, jer su svaki put isti
 			<< std::setw(15)
 			<< "Datum"
 			<< std::setw(20)
@@ -274,7 +273,7 @@ void analiticar::Analiticar::billsDateOverview()
 		{
 			std::vector<std::string> vec;
 			Bill::split(current, '#', vec);
-			vec[0][11] = ' '; Bill::Date date = vec[0];
+			Bill::Date date = vec[0];
 			std::vector<Bill::Product> assistVector;
 
 			Bill::Product temp(vec[2], std::stod(vec[3]), std::stod(vec[4]), std::stod(vec[5]));
