@@ -40,7 +40,7 @@ std::tuple<string, string, string, string, bool> logIn()
 {
 	std::fstream file(UserDataFile);
 	bool quit = false;
-	string locUserName, locPw;
+	string locUserName, locPw, clear;
 	std::tuple<string, string, string, string, bool> type;
 	while (!quit)
 	{
@@ -63,7 +63,7 @@ std::tuple<string, string, string, string, bool> logIn()
 		
 			writeInvalidLogin(locUserName, locPw);
 
-			getchar();
+			getline(std::cin, clear);
 			system("cls");
 		}
 	}
