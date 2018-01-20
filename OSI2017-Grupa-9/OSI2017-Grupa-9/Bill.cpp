@@ -542,13 +542,23 @@ void Bill::writeBillToConsole()
 	sum += this->getProductKey()[0].price*this->getProductKey()[0].soldQuantity;
 	for (int i = 1;i < this->getProductKey().size();i++)
 	{
-		cout << std::setfill(' ') << std::setw(20) <<  "    " << std::setfill(' ') << std::setw(15) << " " 
-			<< std::setw(19) << this->getProductKey()[i].productKey
-			<< std::setw(10) << std::to_string(this->getProductKey()[i].price).substr(0, 4) + admin::getCurrentCurrency()
-			<< std::setw(10) << (std::to_string((this->getProductKey()[i].price) * PDV)).substr(0, 4) + admin::getCurrentCurrency()
-			<< std::setw(10) << this->getProductKey()[i].soldQuantity
-			<< std::setw(10) << std::to_string(this->getProductKey()[i].price*this->getProductKey()[i].soldQuantity).substr(0, 4) + admin::getCurrentCurrency()
-			<< std::setw(10) << std::to_string(this->getProductKey()[i].price*this->getProductKey()[i].soldQuantity + this->getProductKey()[i].price*this->getProductKey()[i].soldQuantity*PDV).substr(0, 4) + admin::getCurrentCurrency() << endl;
+		string printFinal = std::to_string(this->getProductKey()[i].price*this->getProductKey()[i].soldQuantity + this->getProductKey()[i].price*this->getProductKey()[i].soldQuantity*PDV);
+		size_t position = printFinal.find(".", 0);
+		cout 
+			<< std::setfill(' ') << std::setw(20) <<  "    " << std::setfill(' ') << std::setw(15) << " " 
+			<< std::setw(19)
+			<< this->getProductKey()[i].productKey
+			<< std::setw(10) 
+			<< std::to_string(this->getProductKey()[i].price).substr(0, 4) + admin::getCurrentCurrency()
+			<< std::setw(10) 
+			<< (std::to_string((this->getProductKey()[i].price) * PDV)).substr(0, 4) + admin::getCurrentCurrency()
+			<< std::setw(10) 
+			<< this->getProductKey()[i].soldQuantity
+			<< std::setw(10) 
+			<< std::to_string(this->getProductKey()[i].price*this->getProductKey()[i].soldQuantity).substr(0, 4) + admin::getCurrentCurrency()
+			<< std::setw(10) 
+			<< std::to_string(this->getProductKey()[i].price*this->getProductKey()[i].soldQuantity + this->getProductKey()[i].price*this->getProductKey()[i].soldQuantity*PDV).substr(0, position+3) + admin::getCurrentCurrency() << endl;
+		
 		sum += this->getProductKey()[i].price*this->getProductKey()[i].soldQuantity;
 	}
 	
