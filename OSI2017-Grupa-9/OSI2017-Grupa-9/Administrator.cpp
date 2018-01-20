@@ -41,14 +41,13 @@ void admin::Administrator::showAvailableCurrencies() const
 {
 	cout
 		<< "Dostupne valute su: "
+		<< endl << endl
+		<< "\tKM (Konvertibilna marka)"
 		<< endl
-		<< "KM (Konvertibilna marka)"
+		<< "\t$ (Americki dolar)"
 		<< endl
-		<< "$ (Americki dolar)"
-		<< endl
-		<< "e (EURO)"
-		<< endl;
-	
+		<< "\te (EURO)"
+		<< endl << endl;
 }
 
 
@@ -189,7 +188,8 @@ bool admin::isPINokay(const string& PIN)
 
 bool admin::isCurrencyOkay(const string &currency)
 {
-	if (currency == "KM" || currency == "$" || currency == "e")
+	if (currency == "KM" || currency == "$" || currency == "e" || 
+		currency == "Konvertibilna marka" || currency == "Americki dolar" || currency == "EURO" )
 		return true;
 	return false;
 }
@@ -219,7 +219,7 @@ void admin::Administrator::userOverview(std::fstream& fileWithUsers) const
 	cout << std::resetiosflags(std::ios::adjustfield);			// resetovanje 
 	cout << std::setiosflags(std::ios::left);					// poravnanje u lijevo
 
-	cout << "Lista svih korisnika: " << endl;
+	cout << "Lista svih korisnika: " << endl << endl;
 
 
 	for (int i = 0; i < 75; i++) cout << "=";
@@ -247,7 +247,6 @@ void admin::Administrator::userOverview(std::fstream& fileWithUsers) const
 		cout << u << endl;
 
 	for (int i = 0; i < 75; i++) cout << "=";
-	cout << endl;
 }
 
 void admin::Administrator::addNewUser(std::fstream& fileWithUsers) const
@@ -354,7 +353,6 @@ void admin::Administrator::editUser(std::fstream& fileWithUsers) const
 			}
 			case 5:
 			{
-				bool userGroup_temp;
 				cout << "Unesite novu korisnicku grupu" << endl;
 				exist->setUserGroup(getUserGroup());
 				break;
@@ -378,7 +376,7 @@ void admin::Administrator::editUser(std::fstream& fileWithUsers) const
 				<< endl
 				<< "Ako zelite prekinuti koristenje ove funkcije, unesite Q." 
 				<< endl
-				<< "Ako zelite nastaviti, Unesite bilo sta...";
+				<< "Ako zelite nastaviti mjenjati informacije o korisniku, unesite bilo sta...";
 
 			getline(cin, choice);
 
@@ -456,6 +454,12 @@ void admin::Administrator::changeCurrency(std::fstream& fileWithCurrencies) cons
 			cout << "Valuta ne postoji! Unesite ponovo: ";
 			getline(cin, currency);
 		}
+		if (currency == "Americki dolar")
+			currency = "$";
+		else if (currency == "Konvertibilna marka")
+			currency = "KM";
+		else if (currency == "EURO")
+			currency = "e";
 		fileWithCurrencies.close();
 		fileWithCurrencies.open(CurrenciesFile, std::ios::out | std::ios::trunc);	//otvori file i obrise sve iz njega
 		cout << "Valuta uspjesno promijenjena u: " << currency << endl;
@@ -510,7 +514,7 @@ int admin::Administrator::menu() const
 				std::fstream file; file.open(UserDataFile);
 				this->userOverview(file);
 				file.close();
-				cout << "Pritisnite enter da bi nastavili koristiti aplikaciju.."; getchar();
+				cout << endl << "Pritisnite enter da bi nastavili koristiti aplikaciju.."; getchar();
 				system("cls");
 			} break;
 			case 2:
@@ -519,7 +523,7 @@ int admin::Administrator::menu() const
 				std::fstream file; file.open(UserDataFile);
 				this->addNewUser(file);
 				file.close();
-				cout << "Pritisnite enter da bi nastavili koristiti aplikaciju.."; getchar();
+				cout << endl << "Pritisnite enter da bi nastavili koristiti aplikaciju.."; getchar();
 				system("cls");
 			} break;
 			case 3:
@@ -528,7 +532,7 @@ int admin::Administrator::menu() const
 				std::fstream file; file.open(UserDataFile);
 				this->editUser(file);
 				file.close();
-				cout << "Pritisnite enter da bi nastavili koristiti aplikaciju.."; getchar();
+				cout << endl << "Pritisnite enter da bi nastavili koristiti aplikaciju.."; getchar();
 				system("cls");
 			} break;
 			case 4:
@@ -537,23 +541,24 @@ int admin::Administrator::menu() const
 				std::fstream file; file.open(UserDataFile);
 				this->deleteUser(file);
 				file.close();
-				cout << "Pritisnite enter da bi nastavili koristiti aplikaciju.."; getchar();
+				cout << endl << "Pritisnite enter da bi nastavili koristiti aplikaciju.."; getchar();
 				system("cls");
 			} break;
 			case 5:
 			{
 				system("cls");
 				std::fstream file; file.open(CurrenciesFile);
+				cout << "Trenutna valuta: "; cout << admin::getCurrentCurrency() << endl;
 				this->changeCurrency(file);
 				file.close();
-				cout << "Pritisnite enter da bi nastavili koristiti aplikaciju.."; getchar();
+				cout << endl << "Pritisnite enter da bi nastavili koristiti aplikaciju.."; getchar();
 				system("cls");
 			} break;
 			case 6:
 			{
 				system("cls");
 				this->checkFailedLogins();
-				cout << "Pritisnite enter da bi nastavili koristiti aplikaciju.."; getchar();
+				cout << endl << "Pritisnite enter da bi nastavili koristiti aplikaciju.."; getchar();
 				system("cls");
 			} break;
 			case 7:
