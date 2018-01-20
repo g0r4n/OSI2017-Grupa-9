@@ -7,17 +7,19 @@ User admin::Administrator::createNewUser() const
 	cout << "Unesite informacije o novom korisniku: " << endl;
 	string username, name, surename, PIN; bool userGroup;
 	string userGroup_temp;
+	std::size_t tabTest;
 
-	username = getUserName();		//odraditi provjeru za "space" i sankcionisati je
+	username = getUserName();		//odraditi provjeru za "space" i sankcionisati je, kao i tab
 
 	do
 	{
 		cout << "Ime: "; getline(cin, name);
-	} while (name.length() < 1 || name.at(0) == ' ');				//do while petlja postoji zbog mogucnosti da se napravi prazan string ako se samo pritsne enter(\n, endl)
+	} while (name.length() < 1 || name.at(0) == ' ' || ((tabTest=name.string::find_first_not_of("\t") == string::npos)));		//do while petlja postoji zbog mogucnosti da se napravi prazan string ako se samo pritsne enter(\n, endl), ubacena provjera i za tab
+	
 	do
 	{
 		cout << "Prezime: "; getline(cin, surename);
-	} while (surename.length() < 1 || surename.at(0) == ' ');
+	} while (surename.length() < 1 || surename.at(0) == ' ' || ((tabTest = surename.string::find_first_not_of("\t") == string::npos)));
 
 	PIN = getPIN();
 	userGroup = getUserGroup();
@@ -96,13 +98,13 @@ bool admin::Administrator::isUserNameOkay(const string username, std::fstream& f
 string admin::Administrator::getUserName() const
 {
 	std::fstream fileWithUsers(UserDataFile, std::ios::out | std::ios::in);
-	string username;
+	string username; size_t tabTest;
 
 	do
 	{
 		cout << "Korisnicko ime: ";
 		getline(cin, username);
-	} while (username.length() < 1 || username.at(0) == ' ');					//korsitenej do while petlje je objasnjeno u funkciji createNewUser()
+	} while (username.length() < 1 || username.at(0) == ' ' || ((tabTest = username.string::find_first_not_of("\t")) == string::npos));					//korsitenej do while petlje je objasnjeno u funkciji createNewUser()
 	while (!isUserNameOkay(username, fileWithUsers))
 	{
 		cout << "Korisnicko ime je zauzeto. Unesite novo: ";
@@ -314,7 +316,7 @@ void admin::Administrator::editUser(std::fstream& fileWithUsers) const
 				cout << endl;
 			} while (function.length() > 1 || (std::stoi(function) > 6 || std::stoi(function) < 1) );
 
-
+			size_t tabTest;
 			switch (std::stoi(function))
 			{
 
@@ -330,7 +332,7 @@ void admin::Administrator::editUser(std::fstream& fileWithUsers) const
 				{
 					cout << "Unesite novo ime za datog korisnika: ";
 					getline(cin, name_temp);
-				} while (name_temp.length() < 1 || name_temp.at(0) == ' ');
+				} while (name_temp.length() < 1 || name_temp.at(0) == ' ' || ((tabTest = name_temp.string::find_first_not_of("\t")) == string::npos));
 				exist->setName(name_temp);
 				break;
 			}
@@ -341,7 +343,7 @@ void admin::Administrator::editUser(std::fstream& fileWithUsers) const
 				{
 					cout << "Unesite novo prezime za datog korisnika: ";
 					getline(cin, surename_temp);
-				} while (surename_temp.length() < 1 || surename_temp.at(0) == ' ');
+				} while (surename_temp.length() < 1 || surename_temp.at(0) == ' ' || ((tabTest = surename_temp.string::find_first_not_of("\t")) == string::npos));
 				exist->setSureName(surename_temp);
 				break;
 			}

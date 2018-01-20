@@ -7,3 +7,6 @@ g0r4b
 g0r4n 6462
 goci 6462
 test 0000
+Char 1111
+admin 9647
+admin 9764
