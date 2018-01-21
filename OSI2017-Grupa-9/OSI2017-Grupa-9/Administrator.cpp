@@ -314,7 +314,7 @@ void admin::Administrator::editUser(std::fstream& fileWithUsers) const
 				cout << "Izaberite koju/e informaciju/e o korisniku zelite promijeniti(unesite broj, npr. 2 za ime): " ;
 				getline(cin, function);
 				cout << endl;
-			} while (function.length() > 1 || (function != "\n") || (std::stoi(function) > 6 || std::stoi(function) < 1));
+			} while (function.length() != 1 || (function == "\n") && (std::stoi(function) > 6 || std::stoi(function) < 1));
 
 			size_t tabTest;
 			switch (std::stoi(function))
